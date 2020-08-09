@@ -7,30 +7,10 @@ class Admin extends CI_Controller {
 		$this->load->database();
 		$this->load->model('Admin_model','am');
 		$this->load->library('session');
+		hakakses();
 	}
 
-	function login()
-	{
-		$this->load->view('admin/login');
-		if(isset($_POST['submit'])){
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
-
-			$get_akun = $this->db->get_where('akun',['akun_username'=>$username])->row_array();
-			$password_verify = password_verify($password, $get_akun['akun_password']);
-			if($password_verify){
-				$data = [
-					'nama' => $get_akun['akun_nama'],
-					'nik' => $get_akun['akun_nik'],
-				];
-				$this->session->set_userdata($data);
-				redirect('admin/index');
-			}else{
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Salah Username atau Password</div>');
-				redirect('admin/login');
-			}
-		}
-	}
+	
 
 	function index()
 	{
@@ -119,15 +99,7 @@ class Admin extends CI_Controller {
 	}
 
 	function atlet()
-	{
-		// $data['atlet'] = $this->am->getQuery("SELECT atlet_id, atlet_nama, atlet_unit,
-		// 								    max(if(kriteria_nama = 'Speed', nilai_kriteria, null)) as Speed, 
-		// 								    max(if(kriteria_nama = 'Agility', nilai_kriteria, null)) as Agility, 
-		// 								    max(if(kriteria_nama = 'Power', nilai_kriteria, null)) as Power, 
-		// 								    max(if(kriteria_nama = 'Stamina', nilai_kriteria, null)) as Stamina, 
-		// 								    max(if(kriteria_nama = 'Kedisiplinan', nilai_kriteria, null)) as Kedisiplinan 
-		// 								FROM `nilai_atlet`")->result();
-		
+	{		
 		$data['title'] = "Data Atlet";	
 		$data['kriteria'] = $this->am->getData('kriteria')->result();
 		
@@ -296,12 +268,12 @@ class Admin extends CI_Controller {
 					$fuzzy_segitiga_id = 3;
 				}elseif ($nilai_kriteria < 50 && $nilai_kriteria >=25) { // cukup baik ckup cocok
 					$fuzzy_segitiga_id = 2;
-				}elseif ($nilai_kriteria > 25) { // tidak baik tidak cocok
+				}elseif ($nilai_kriteria < 25) { // tidak baik tidak cocok
 					$fuzzy_segitiga_id = 1;
 				}
 				if($atlet_id == null){ //TAMBAH DATA
 					$data = [
-					'akun_nik' => '35091927393',
+					'akun_nik' => $this->session->userdata('nik'),
 					'atlet_id' => $this->input->post('atlet_nama'),
 					'kriteria_id' => $key->kriteria_id,
 					'nilai_kriteria' => $nilai_kriteria,
@@ -312,7 +284,7 @@ class Admin extends CI_Controller {
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 				}else{ //EDIT DATA
 					$data = [
-					'akun_nik' => '35091927393',
+					'akun_nik' => $this->session->userdata('nik'),
 					'kriteria_id' => $key->kriteria_id,
 					'nilai_kriteria' => $nilai_kriteria,
 					'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
@@ -568,54 +540,195 @@ class Admin extends CI_Controller {
 		$jml_alternatif = count($alternatif);
 		$temp = 0;
 		if(isset($_POST['submit'])){
+			$atlet_id = $this->input->post('atlet_id');
 			$atlet_nama = $this->input->post('atlet_nama');
-			$nilai_atlet = $this->am->getQuery("SELECT * FROM `nilai`
-				JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
-				WHERE atlet_id = $atlet_nama ORDER BY kriteria_id ASC")->result();
-			foreach ($alternatif as $key) {
-				$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
-				JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
-                WHERE alternatif_id = ".$key->alternatif_id."
-                ORDER BY alternatif_id, kriteria_id asc
-                ")->result();
+			if ($atlet_id == null) { //simpan
+						$nilai_atlet = $this->am->getQuery("SELECT * FROM `nilai`
+						JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+						WHERE atlet_id = $atlet_nama ORDER BY kriteria_id ASC")->result();
+						if ($nilai_atlet == null) {
+							$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Atlet</div>');
+						}else{
+							foreach ($alternatif as $key) {
+								$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
+								JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+				                WHERE alternatif_id = ".$key->alternatif_id."
+				                ORDER BY alternatif_id, kriteria_id asc
+				                ")->result();
 
-				for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
-					$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
-					$temp = $nilai_perkalian;
+								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
+									$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
+									$temp = $nilai_perkalian;
+								}
+								$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
+								$temp = 0; $nilai_perkalian = 0;
+								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
+									$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
+									$temp = $nilai_perkalian;
+								}
+								$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
+								$temp = 0; $nilai_perkalian = 0;
+								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
+									$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
+									$temp = $nilai_perkalian;
+								}
+								$nilai_z = (1/$jml_kriteria)* $nilai_perkalian ;
+								$temp = 0; $nilai_perkalian = 0;
+
+								$data = [
+									'nilai_y' => $nilai_y,
+									'nilai_q' => $nilai_q,
+									'nilai_z' => $nilai_z,
+									'alternatif_id' => $key->alternatif_id,
+									'atlet_id' => $atlet_nama,
+
+								];
+
+								$this->am->insertData('y_q_z',$data);
+								
+							}
+							$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+						}
+							
+					
+			}else{ //hitung ulang
+				$nilai_atlet = $this->am->getQuery("SELECT * FROM `nilai`
+						JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+						WHERE atlet_id = $atlet_id ORDER BY kriteria_id ASC")->result();
+				if($nilai_atlet == null){
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Atlet</div>');
+				}else{
+					foreach ($alternatif as $key) {
+						$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
+						JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+		                WHERE alternatif_id = ".$key->alternatif_id."
+		                ORDER BY alternatif_id, kriteria_id asc
+		                ")->result();
+
+						for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
+							$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
+							$temp = $nilai_perkalian;
+						}
+						$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
+						$temp = 0; $nilai_perkalian = 0;
+						for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
+							$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
+							$temp = $nilai_perkalian;
+						}
+						$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
+						$temp = 0; $nilai_perkalian = 0;
+						for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
+							$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
+							$temp = $nilai_perkalian;
+						}
+						$nilai_z = (1/$jml_kriteria)* $nilai_perkalian ;
+						$temp = 0; $nilai_perkalian = 0;
+
+						$data = [
+							'nilai_y' => $nilai_y,
+							'nilai_q' => $nilai_q,
+							'nilai_z' => $nilai_z,
+
+						];
+						$this->db->where('alternatif_id', $key->alternatif_id);
+						$this->db->where('atlet_id', $atlet_id);
+						$this->db->update('y_q_z', $data);	
+						
+						
+					}
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
 				}
-				$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
-				$temp = 0; $nilai_perkalian = 0;
-				for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
-					$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
-					$temp = $nilai_perkalian;
-				}
-				$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
-				$temp = 0; $nilai_perkalian = 0;
-				for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
-					$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
-					$temp = $nilai_perkalian;
-				}
-				$nilai_z = (1/$jml_kriteria)* $nilai_perkalian ;
-				$temp = 0; $nilai_perkalian = 0;
-
-				$data = [
-					'nilai_y' => $nilai_y,
-					'nilai_q' => $nilai_q,
-					'nilai_z' => $nilai_z,
-					'alternatif_id' => $key->alternatif_id,
-					'atlet_id' => $atlet_nama,
-
-				];
-
-				$this->am->insertData('y_q_z',$data);
-				
+					
 			}
-			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+			
 				redirect('admin/perangkingan');
 			
 		}//submit
 		
 
+	}
+
+	function getKeoptimisan()
+	{
+		$data =[];
+		
+        $kesimpulan = "";
+		$atlet = $this->am->getQuery("SELECT DISTINCT atlet.atlet_id, atlet.atlet_nama, atlet.atlet_unit FROM `integral`
+			JOIN atlet ON integral.atlet_id = atlet.atlet_id")->result();
+		for ($i=0; $i < count($atlet) ; $i++) { 
+			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
+			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
+			$integral = $this->am->getQuery("SELECT * FROM `integral`
+				JOIN alternatif ON integral.alternatif_id = alternatif.alternatif_id
+				WHERE atlet_id = ".$atlet[$i]->atlet_id."
+				ORDER BY integral.alternatif_id ASC")->result();
+			$temp = 0;
+        	$temp_alternatif = " ";
+			for ($j=0; $j < count($integral) ; $j++) { 
+				
+				$data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
+				$data[$i]['integral'][$j]['alternatif_nama'] = $integral[$j]->alternatif_nama;
+			  	$data[$i]['integral'][$j]['a_0'] = $integral[$j]->a_0;
+			  	$data[$i]['integral'][$j]['a_0_5'] = $integral[$j]->a_0_5;
+			  	$data[$i]['integral'][$j]['a_1'] = $integral[$j]->a_1;
+			  	if($integral[$j]->a_1 > $temp){
+	                 	$temp = $integral[$j]->a_1;
+	                 	$temp_alternatif = $integral[$j]->alternatif_nama;
+
+
+	            }elseif($integral[$j]->a_1 == $temp){
+	                    $kesimpulan = $integral[$j]->alternatif_nama." Dan ". $temp_alternatif;
+	            }else{
+	                    $kesimpulan = $integral[$j]->alternatif_nama;
+	            }
+	               
+			  }
+			  $data[$i]['temp'] = $temp;  
+			  $data[$i]['temp_alternatif'] = $temp_alternatif;  
+			  $data[$i]['kesimpulan'] = $kesimpulan;  
+		}
+		return $data;
+		// print_r(json_encode($data));
+	}
+
+	function keoptimisan()
+	{
+		$data['title'] = "Data Derajat Keoptimisan Atlet";
+		$data['keoptimisan'] = $this->getKeoptimisan();
+		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT atlet.atlet_nama, atlet.atlet_id FROM `integral`
+			RIGHT JOIN atlet on integral.atlet_id = atlet.atlet_id
+			RIGHT JOIN y_q_z ON y_q_z.atlet_id = atlet.atlet_id
+			WHERE integral.integral_id is null")->result();
+		$this->load->view('admin/part/head');
+		$this->load->view('admin/part/navbar');
+		$this->load->view('admin/part/js');
+		$this->load->view('admin/part/sidebar',$data);
+		
+		$this->load->view('admin/keoptimisan',$data);
+		$this->load->view('admin/part/footer');
+
+		if(isset($_POST['submit'])){
+			$atlet_nama = $this->input->post('atlet_nama');
+			$y_q_z = $this->am->getQuery("SELECT * FROM `y_q_z`
+				WHERE atlet_id = ".$atlet_nama)->result();
+			foreach ($y_q_z as $key) {
+				$a_0 = (1/2)*((0)*($key->nilai_z)+($key->nilai_q)+(1-0)*($key->nilai_y));
+				$a_0_5 = (1/2)*((0.5)*($key->nilai_z)+($key->nilai_q)+(1-0.5)*($key->nilai_y));
+				$a_1 = (1/2)*((1)*($key->nilai_z)+($key->nilai_q)+(1-1)*($key->nilai_y));
+
+				$data = [
+					'a_0' => $a_0,
+					'a_0_5' => $a_0_5,
+					'a_1' => $a_1,
+					'alternatif_id' => $key->alternatif_id,
+					'atlet_id' => $atlet_nama,
+				];
+				$this->am->insertData('integral',$data);
+			}
+			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+			redirect('admin/keoptimisan');
+
+		} // submit
 	}
 }
 

@@ -34,7 +34,7 @@
                   <li><a class="nav-link" href="<?=base_url()?>admin/kriteria">Kriteria</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/alternatif">Alternatif</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/rating_kecocokan">Rating Kecocokan</a></li>
-                  <li><a class="nav-link" href="<?=base_url()?>admin/integral">Derajat Keoptimisan</a></li>
+                  
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -42,6 +42,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="<?=base_url()?>admin/nilai_atlet">Nilai Atlet</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/perangkingan">Perangkingan Atlet</a></li>
+                  <li><a class="nav-link" href="<?=base_url()?>admin/keoptimisan">Derajat Keoptimisan</a></li>
                   <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
                   <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                 </ul>

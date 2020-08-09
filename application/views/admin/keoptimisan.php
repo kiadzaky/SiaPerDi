@@ -24,35 +24,44 @@
                                 <tr>
                                   <th>No</th>
                                   <th>Nama Atlet</th>
-                                  <th>Aksi</th>
+                                  <th>Kesimpulan</th>
                                   <th>Alternatif</th>
-                                  <th>Nilai Y</th>
-                                  <th>Nilai Q</th>
-                                  <th>Nilai Z</th>
+                                  <TH>Aksi</TH>
+                                  <th>Nilai A = 0</th>
+                                  <th>Nilai A = 0,5</th>
+                                  <th>Nilai A = 1</th>
                                 </tr>
                             </thead>
                             <tbody>
                               <?php 
                               $no=1;
-                              foreach ($perangkingan as $pr) {
-                               $jml= count($pr['y_q_z']);
+                              foreach ($keoptimisan as $ko) {
+                               $jml= count($ko['integral']);
                                $jml+=1;
+                               
                               ?>
                                 <tr>
                                     <td rowspan="<?= $jml ?>"><?=$no++?></td>
-                                    <td rowspan="<?= $jml ?>"><?=$pr['atlet_nama']?></td>
-                                    <td rowspan="<?= $jml ?>"><form method="post" action="<?= base_url('admin/perangkingan') ?>"> <input type="" name="atlet_id" value="<?=$pr['atlet_id']?>" hidden=""> <input type="submit" class="btn btn-success" name="submit" value="Hitung Ulang">  </form>  </td>
+                                    <td rowspan="<?= $jml ?>"><?=$ko['atlet_nama']?></td>
+                                    <td rowspan="<?= $jml ?>"><?=$ko['kesimpulan']?></td>
+                                    <td rowspan="<?= $jml ?>">
+                                      <input type="submit" name="">
+                                    </td>
                                 </tr>    
                                     <?php
-                                    foreach ($pr['y_q_z'] as $yqz) {
+                                    foreach ($ko['integral'] as $integral) {
                                       echo "<tr>";
-                                      echo "<td>".$yqz['alternatif_nama']."</td>";
-                                      echo "<td>".$yqz['nilai_y']."</td>";
-                                      echo "<td>".$yqz['nilai_q']."</td>";
-                                      echo "<td>".$yqz['nilai_z']."</td>";
+                                      echo "<td>".$integral['alternatif_nama']."</td>";
+                                      echo "<td>".$integral['a_0']."</td>";
+                                      echo "<td>".$integral['a_0_5']."</td>";
+                                      echo "<td>".$integral['a_1']."</td>";
+
                                       echo "</tr>";
-                                    }
-                                    ?>                                
+                                      
+                                    }                              
+                                    ?>
+                                      
+                                                                    
                               <?php
                               
                               } $no++;?>
@@ -80,7 +89,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/perangkingan')?>">
+                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/keoptimisan')?>">
                     
                     <div class="card-body">
                       <div class="form-group row">
