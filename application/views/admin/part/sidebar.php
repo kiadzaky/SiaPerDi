@@ -1,7 +1,7 @@
 <div class="main-sidebar">
         <aside id="sidebar-wrapper">
           <div class="sidebar-brand">
-            <a href="<?=base_url()?>"><?=$title?></a>
+            <a href="#"><?=$title?></a>
           </div>
           <div class="sidebar-brand sidebar-brand-sm">
 
@@ -16,9 +16,18 @@
           </div>
           <ul class="sidebar-menu">
               <li class="menu-header">Dashboard</li>
-                
-                <li><a class="nav-link" href="<?=base_url()?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
-              <li class="menu-header">Halaman</li>
+                <?php if ($this->session->userdata('jabatan_id') == 0) {
+                  $jabatan = 'admin';
+                }else{
+                  $jabatan = 'pelatih';
+                }
+
+                ?>
+                <li><a class="nav-link" href="<?=base_url().$jabatan?>"><i class="fas fa-fire"></i> <span>Dashboard</span></a></li>
+              
+              <?php if ($this->session->userdata('jabatan_id') == 0) {
+              ?>
+              <li class="menu-header">Halaman Admin</li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Seseorang</span></a>
                 <ul class="dropdown-menu">
@@ -28,7 +37,7 @@
                   <li><a href="<?=base_url()?>admin/jabatan">Jabatan</a></li>
                 </ul>
               </li>
-               <li class="nav-item dropdown">
+              <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Halaman</span></a>
                 <ul class="dropdown-menu">
                   <li><a class="nav-link" href="<?=base_url()?>admin/kriteria">Kriteria</a></li>
@@ -37,12 +46,16 @@
                   
                 </ul>
               </li>
+              <?php
+              } ?>
+              
+              <li class="menu-header">Halaman Pelatih</li> 
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-pencil-ruler"></i> <span>Perhitungan</span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="<?=base_url()?>admin/nilai_atlet">Nilai Atlet</a></li>
-                  <li><a class="nav-link" href="<?=base_url()?>admin/perangkingan">Perangkingan Atlet</a></li>
-                  <li><a class="nav-link" href="<?=base_url()?>admin/keoptimisan">Derajat Keoptimisan</a></li>
+                  <li><a href="<?=base_url()?>pelatih/nilai_atlet">Nilai Atlet</a></li>
+                  <li><a class="nav-link" href="<?=base_url()?>pelatih/perangkingan">Perangkingan Atlet</a></li>
+                  <li><a class="nav-link" href="<?=base_url()?>pelatih/keoptimisan">Derajat Keoptimisan</a></li>
                   <li><a class="nav-link" href="layout-transparent.html">Transparent Sidebar</a></li>
                   <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                 </ul>

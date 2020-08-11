@@ -41,7 +41,7 @@
                                 <tr>
                                     <td rowspan="<?= $jml ?>"><?=$no++?></td>
                                     <td rowspan="<?= $jml ?>"><?=$pr['atlet_nama']?></td>
-                                    <td rowspan="<?= $jml ?>"><form method="post" action="<?= base_url('admin/perangkingan') ?>"> <input type="" name="atlet_id" value="<?=$pr['atlet_id']?>" hidden=""> <input type="submit" class="btn btn-success" name="submit" value="Hitung Ulang">  </form>  </td>
+                                    <td rowspan="<?= $jml ?>"><form method="post" action="<?= base_url('admin/perangkingan') ?>"> <input type="" name="atlet_nama" value="<?=$pr['atlet_id']?>" hidden=""> <input type="" name="atlet_id" value="<?=$pr['atlet_id']?>" hidden=""> <input type="submit" class="btn btn-success" name="submit" value="Hitung Ulang">  </form>  </td>
                                 </tr>    
                                     <?php
                                     foreach ($pr['y_q_z'] as $yqz) {

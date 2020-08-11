@@ -174,8 +174,8 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Nama Atlet</label>
                         <div class="col-sm-9">
-                          <input type="" name="atlet_id" id = "atlet_id" value="<?=$na['atlet_id']?>">
-                          <input type="" name="atlet_nama" id="atlet_nama_edit" readonly="" value="<?=$na['atlet_nama']?>">
+                          <input type="" name="atlet_id" id = "atlet_id" value="<?=$na['atlet_id']?>" hidden>
+                          <input type="" name="atlet_nama" id="atlet_nama_edit" class="form form-control" readonly="" value="<?=$na['atlet_nama']?>">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>

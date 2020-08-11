@@ -45,7 +45,7 @@
                                     <td rowspan="<?= $jml ?>"><?=$ko['atlet_nama']?></td>
                                     <td rowspan="<?= $jml ?>"><?=$ko['kesimpulan']?></td>
                                     <td rowspan="<?= $jml ?>">
-                                      <input type="submit" name="">
+                                      <form action="" method="POST"><input type="" name="atlet_nama" value="<?= $ko['atlet_id'] ?>" hidden><input type="" name="atlet_id" value="<?= $ko['atlet_id'] ?>" hidden> <input type="submit" name="submit" value="Hitung Ulang" class="btn btn-success"></form>
                                     </td>
                                 </tr>    
                                     <?php

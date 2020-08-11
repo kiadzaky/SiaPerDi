@@ -7,21 +7,21 @@ function hakakses()
 	if(!$ci->session->userdata('nik')) {
 		redirect('auth');
 	}
-	//  else {
-	// 	// dapatkan siapa sih yang sedang akses melalui session
-	// 	$role_id = $ci->session->userdata('role_id');
-	// 	// kita berada di menu/akses mana ?
-	// 	$menu = $ci->uri->segment(1);
-
-	// 	$queryMenu = $ci->db->get_where('user_menu', ['menu' => $menu])->row_array();
-	// 	$menu_id = $queryMenu['id'];
-
-	// 	$userAccess = $ci->db->get_where('user_access_menu', ['menu_id' => $menu_id, 'role_id' => $role_id]);
-
-	// 	if($userAccess->num_rows() < 1) {
-	// 		redirect('auth/blocked');
-	// 	}
-	// }
+	 else {
+		// dapatkan siapa sih yang sedang akses melalui session
+		$jabatan_id = $ci->session->userdata('jabatan_id');
+		// kita berada di menu/akses mana ?
+		$menu =  ucfirst($ci->uri->segment(1)) ;
+		// echo "menu".$menu;
+		$userAccess = $ci->db->get_where('jabatan', ['jabatan_id' => $jabatan_id, 'jabatan_nama' => $menu ]);
+		// print_r ($userAccess);
+		if($jabatan_id != 0){
+			if($userAccess->num_rows() < 1){
+			redirect('auth/block');
+			}
+		}
+		
+	}
 }
 
 

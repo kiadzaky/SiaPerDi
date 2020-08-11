@@ -26,9 +26,16 @@ class Auth extends CI_Controller {
 					$data = [
 						'nama' => $get_akun['akun_nama'],
 						'nik' => $get_akun['akun_nik'],
+						'jabatan_id' => $get_akun['jabatan_id'],
 					];
 					$this->session->set_userdata($data);
-					redirect('admin/index');
+					if($get_akun['jabatan_id'] == 1){ //pelatih
+						redirect('pelatih/index');
+					}else{ // admin
+						redirect('admin/index');
+					}
+					
+					
 				}else{
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Salah Username atau Password</div>');
 					redirect('auth');
@@ -42,8 +49,17 @@ class Auth extends CI_Controller {
 	{
 		$this->session->unset_userdata('nik');
 		$this->session->unset_userdata('nama');
+		$this->session->unset_userdata('id_jabatan');
+		session_destroy();
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil logout.</div>');
 			redirect('auth');
+	}
+
+	function block()
+	{
+		$get_data = $this->db->get_where('jabatan',['jabatan_id'=>$this->session->userdata('jabatan_id')])->row_array();
+		echo "Akses Ditolak!!";
+		echo "<a href = ".base_url('').$get_data['jabatan_nama']." >Kembali</a>";
 	}
 
 }
