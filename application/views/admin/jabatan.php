@@ -36,7 +36,7 @@
                                     <td><?=$no++?></td>
                                     <td><?=$j->jabatan_nama?></td>
                                     <td>
-                                      <a href=""><button>asd</button></a>
+                                      <a href="<?= base_url('admin/delete_jabatan')?><?=$j->jabatan_id?>"><button class="btn btn-danger">Hapus</button></a>
 
                                     </td>
                                 </tr>
@@ -67,7 +67,7 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/akun')?>">
+                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/jabatan')?>">
                     
                     <div class="card-body">
                       <div class="form-group row">

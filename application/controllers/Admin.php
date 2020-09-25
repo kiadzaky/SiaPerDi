@@ -169,6 +169,13 @@ class Admin extends CI_Controller {
 		$this->load->view('admin/part/footer');
 	}
 
+	function delete_jabatan($id)
+	{
+		$this->am->Delete("jabatan",["jabatan_id"=>$id]);
+		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
+		redirect('admin/jabatan');
+	}
+
 	function kriteria()
 	{
 		$data['title'] = "Data Kriteria";	
