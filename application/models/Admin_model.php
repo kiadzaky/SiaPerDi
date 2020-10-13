@@ -25,8 +25,4 @@ class Admin_model extends CI_Model {
 		$this->db->delete($table, $id);
 	}
 
-	public function is_logged_in()
-	{
-		
-	}
 }

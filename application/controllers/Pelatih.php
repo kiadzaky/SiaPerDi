@@ -12,10 +12,12 @@ class Pelatih extends CI_Controller {
 
 	function index()
 	{
-		$data['title'] = "Dashboard";		
+		$data['title'] = "Dashboard";	
+		$jml_atlet = count($this->am->getData('atlet')->result()) ;
+		$data['jml_atlet'] = $jml_atlet;	
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
-		$this->load->view('pelatih/index',$data);
+		$this->load->view('admin/index',$data);
 		$this->load->view('admin/part/js');
 		$this->load->view('admin/part/sidebar',$data);
 		$this->load->view('admin/part/footer');
@@ -304,6 +306,7 @@ class Pelatih extends CI_Controller {
 			  	if($integral[$j]->a_1 > $temp){
 	                 	$temp = $integral[$j]->a_1;
 	                 	$temp_alternatif = $integral[$j]->alternatif_nama;
+	                 	$kesimpulan = $temp_alternatif;
 
 
 	            }elseif($integral[$j]->a_1 == $temp){

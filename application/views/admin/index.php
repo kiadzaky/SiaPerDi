@@ -6,7 +6,7 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>Dashboard</h1>
+            <h1><?=$title?></h1>
           </div>
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
@@ -19,12 +19,12 @@
                     <h4>Total Atlet</h4>
                   </div>
                   <div class="card-body">
-                    10
+                    <?= $jml_atlet ?>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+            <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
               <div class="card card-statistic-1">
                 <div class="card-icon bg-danger">
                   <i class="far fa-newspaper"></i>
@@ -68,11 +68,11 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="card-body">
+            </div> -->
+           <!--  <div class="card-body">
                     <p class="mb-2">Use the Bootstrap method to create modal. You need to create an HTML structure for modal and the following button will trigger it.</p>
                     <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Aw, yeah!</button>
-            </div>
+            </div> -->
 
           </div>
         </section>
@@ -81,7 +81,7 @@
     </div>
   </div>
 
-  <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
+  <!-- <div class="modal fade" tabindex="-1" role="dialog" id="exampleModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -138,13 +138,13 @@
                     </div>
                   </form>
               </div>
-              <!-- <div class="modal-footer bg-whitesmoke br">
+              <div class="modal-footer bg-whitesmoke br">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
-              </div> -->
+              </div>
             </div>
           </div>
-  </div>
+  </div> -->
 
  
 </body>

@@ -10,11 +10,11 @@ class Admin extends CI_Controller {
 		hakakses();
 	}
 
-	
-
 	function index()
 	{
-		$data['title'] = "Dashboard";		
+		$data['title'] = "Dashoard";		
+		$jml_atlet = count($this->am->getData('atlet')->result()) ;
+		$data['jml_atlet'] = $jml_atlet;
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/index',$data);
