@@ -53,14 +53,14 @@
                 </div>
               </div> -->
 
-              <!-- <div class="form-group text-right">
-                <a href="auth-forgot-password.html" class="float-left mt-3">
+              <div class="form-group text-right">
+                <!-- <a href="auth-forgot-password.html" class="float-left mt-3">
                   Forgot Password?
-                </a>
+                </a> -->
                 <input type="submit" name="submit" value="MASUK" class="btn btn-primary btn-lg btn-icon icon-right" tabindex="4">
               </div>
 
-              <div class="mt-5 text-center">
+              <!-- <div class="mt-5 text-center">
                 Don't have an account? <a href="auth-register.html">Create new one</a>
               </div> -->
             </form>
