@@ -53,7 +53,7 @@
                 </div>
               </div> -->
 
-              <div class="form-group text-right">
+              <!-- <div class="form-group text-right">
                 <a href="auth-forgot-password.html" class="float-left mt-3">
                   Forgot Password?
                 </a>
@@ -62,7 +62,7 @@
 
               <div class="mt-5 text-center">
                 Don't have an account? <a href="auth-register.html">Create new one</a>
-              </div>
+              </div> -->
             </form>
 
             <div class="text-center mt-5 text-small">
