@@ -223,7 +223,7 @@ class Pelatih extends CI_Controller {
 							$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Atlet</div>');
 						}else{
 							$alternatif_in_rk = $this->am->getQuery("SELECT rating_kecocokan.alternatif_id FROM `rating_kecocokan` 
-								RIGHT JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id WHERE rating_kecocokan.alternatif_id is null");
+								RIGHT JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id WHERE rating_kecocokan.alternatif_id is null")->result();
 							if(count($alternatif_in_rk) == 0){
 									foreach ($alternatif as $key) {
 										$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
