@@ -224,27 +224,27 @@ class Pelatih extends CI_Controller {
 						}else{
 							$alternatif_in_rk = $this->am->getQuery("SELECT rating_kecocokan.alternatif_id FROM `rating_kecocokan` 
 								RIGHT JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id WHERE rating_kecocokan.alternatif_id is null")->result();
-							if(count($alternatif_in_rk) == 0){
-									foreach ($alternatif as $key) {
+							if(count($alternatif_in_rk) == 0){ //deteksi alternatif sudah masuk rating kecocokan
+									foreach ($alternatif as $key) { //perulangan sesuai jml alternatif
 										$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
 										JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
 						                WHERE alternatif_id = ".$key->alternatif_id."
 						                ORDER BY alternatif_id, kriteria_id asc
 						                ")->result();
 
-										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
+										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Y
 											$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
 											$temp = $nilai_perkalian;
 										}
 										$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
 										$temp = 0; $nilai_perkalian = 0;
-										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
+										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Q
 											$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
 											$temp = $nilai_perkalian;
 										}
 										$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
 										$temp = 0; $nilai_perkalian = 0;
-										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
+										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Z
 											$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
 											$temp = $nilai_perkalian;
 										}
