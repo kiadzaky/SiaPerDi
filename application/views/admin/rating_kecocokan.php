@@ -24,39 +24,45 @@
                                 <tr>
                                   <th>No</th>
                                   <th>Alternatif</th>
-                                  <?php 
-                                  foreach ($kriteria as $k) {
-                                  ?>
-
-                                    <th><?=$k->kriteria_nama?></th>
-                                  <?php
-                                  }
-                                  ?>
                                   <th>Aksi</th>
+                                  <th>Kriteria</th>
+                                  <th>Rating Kecocokan</th>
                                 </tr>
                             </thead>
                             <tbody>
+
                               <?php 
                               $no=1;
                               foreach ($rating_kecocokan as $rk) {
                               ?>
-                                <tr>
-                                    <td><?=$no++?></td>
-                                    <td><?=$rk['alternatif_nama']?></td>
-                                    <?php
-                                    foreach ($rk['fuzzy_segitiga'] as $fs) {
-                                     echo "<td>".$fs['uraian_kecocokan']."</td>";
-                                    }
-                                    ?>
-                                    <td>
-                                      <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$rk['alternatif_id']?>" >Edit</button>
-                                      <a href="<?=base_url('admin/delete_rating_kecocokan')?>/<?=$rk['alternatif_id']?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
 
-                                    </td>
-                                </tr>
-                              <?php
-                              
-                              } $no++;?>
+                                  <?php 
+                                   $jum = count($rk['fuzzy_segitiga']);
+                                   $jum = $jum + 2;
+                                      echo "<tr>";
+                                      echo '<td rowspan ='. $jum .' > '.$no.' </td>';
+                                      echo '<td rowspan ='. $jum .' > '.$rk['alternatif_nama'].' </td>';
+                                      echo "</tr>";
+                                  ?>
+                                      <td rowspan="<?=$jum?>">
+                                        <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$rk['alternatif_id']?>">Edit</button>
+                                        <a href="<?=base_url('admin/delete_rating_kecocokan')?>/<?= $rk['alternatif_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                      </td>
+                                      <?php  
+                                      
+                                      foreach ($rk['fuzzy_segitiga'] as $rkk) {
+                                        echo "<tr>";                                     
+                                        echo '<td> '.$rkk['kriteria_nama'].' </td>';
+                                        echo '<td> '.$rkk['uraian_kecocokan'].' </td>';
+                                        echo "</tr>";
+
+                                      }
+                                      
+                                       
+                             $no++;
+                                    ?>   
+                              <?php     } ?>
+                                
                             </tbody>
                       </table>
                     </div>

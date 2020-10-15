@@ -198,6 +198,17 @@ class Admin extends CI_Controller {
 				];
 
 				$this->db->insert('kriteria', $data);
+				
+				$get_id_kriteria = $this->am->getQuery("SELECT kriteria_id FROM `kriteria` WHERE kriteria_nama = '$kriteria_nama'")->row_array();
+				$alternatif = $this->am->getQuery("SELECT alternatif_id FROM `alternatif`")->result();
+				foreach ($alternatif as $a) {
+					$data = [
+						'alternatif_id' => $a->alternatif_id,
+						'kriteria_id' => $get_id_kriteria['kriteria_id'],
+						'fuzzy_segitiga_id' => 1,
+					];
+					$this->db->insert('rating_kecocokan', $data );
+				}
 
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 			}else{ //edit

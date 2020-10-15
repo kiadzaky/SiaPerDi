@@ -32,7 +32,7 @@ class Profil extends CI_Controller {
 					];
 				$this->db->where('akun_nik', $this->input->post('akun_nik'));
 				$this->db->update('akun', $data);	
-				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ganti Profil</div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ganti Password</div>');
 					redirect('profil');	
 		}
 		

@@ -51,14 +51,14 @@
                               foreach ($nilai_atlet as $na) {
                               ?>
 
-                                   <?php 
+                                  <?php 
                                    $jum = count($na['kriteria']);
                                    $jum = $jum + 2;
                                       echo "<tr>";
                                       echo '<td rowspan ='. $jum .' > '.$no.' </td>';
                                       echo '<td rowspan ='. $jum .' > '.$na['atlet_nama'].' </td>';
                                       echo "</tr>";
-                                      ?>
+                                  ?>
                                       <td rowspan="<?=$jum?>">
                                         <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$na['atlet_id']?>" onclick="setId('<?= $na['atlet_id'] ?>', '<?= $na['atlet_nama']?>')">Edit</button>
                                         <a href="<?=base_url('pelatih/delete_nilai')?>/<?= $na['atlet_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>

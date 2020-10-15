@@ -209,7 +209,6 @@ class Pelatih extends CI_Controller {
 			
 		}//submit
 	}
-
 	function hitungPerangkingan($atlet_nama, $atlet_id)
 	{
 		$kriteria = $this->am->getData('kriteria')->result();
@@ -223,59 +222,67 @@ class Pelatih extends CI_Controller {
 						if ($nilai_atlet == null) {
 							$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Atlet</div>');
 						}else{
-							foreach ($alternatif as $key) {
-								$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
-								JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
-				                WHERE alternatif_id = ".$key->alternatif_id."
-				                ORDER BY alternatif_id, kriteria_id asc
-				                ")->result();
+							$alternatif_in_rk = $this->am->getQuery("SELECT rating_kecocokan.alternatif_id FROM `rating_kecocokan` 
+								RIGHT JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id WHERE rating_kecocokan.alternatif_id is null");
+							if(count($alternatif_in_rk) == 0){
+									foreach ($alternatif as $key) {
+										$rating_kecocokan = $this->am->getQuery("SELECT * FROM `rating_kecocokan`
+										JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+						                WHERE alternatif_id = ".$key->alternatif_id."
+						                ORDER BY alternatif_id, kriteria_id asc
+						                ")->result();
 
-								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
-									$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
-									$temp = $nilai_perkalian;
-								}
-								$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
-								$temp = 0; $nilai_perkalian = 0;
-								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
-									$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
-									$temp = $nilai_perkalian;
-								}
-								$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
-								$temp = 0; $nilai_perkalian = 0;
-								for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
-									$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
-									$temp = $nilai_perkalian;
-								}
-								$nilai_z = (1/$jml_kriteria)* $nilai_perkalian ;
-								$temp = 0; $nilai_perkalian = 0;
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
+											$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
+											$temp = $nilai_perkalian;
+										}
+										$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
+										$temp = 0; $nilai_perkalian = 0;
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
+											$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
+											$temp = $nilai_perkalian;
+										}
+										$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
+										$temp = 0; $nilai_perkalian = 0;
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
+											$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
+											$temp = $nilai_perkalian;
+										}
+										$nilai_z = (1/$jml_kriteria)* $nilai_perkalian ;
+										$temp = 0; $nilai_perkalian = 0;
 
-								if($atlet_id == null){ //simpan
+										if($atlet_id == null){ //simpan
 
-									$data = [
-										'nilai_y' => $nilai_y,
-										'nilai_q' => $nilai_q,
-										'nilai_z' => $nilai_z,
-										'alternatif_id' => $key->alternatif_id,
-										'atlet_id' => $atlet_nama,
+											$data = [
+												'nilai_y' => $nilai_y,
+												'nilai_q' => $nilai_q,
+												'nilai_z' => $nilai_z,
+												'alternatif_id' => $key->alternatif_id,
+												'atlet_id' => $atlet_nama,
 
-									];
+											];
 
-									$this->am->insertData('y_q_z',$data);
-									$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
-								}else{ //hitung ulang
-									$data = [
-										'nilai_y' => $nilai_y,
-										'nilai_q' => $nilai_q,
-										'nilai_z' => $nilai_z,
+											$this->am->insertData('y_q_z',$data);
+											$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+										}else{ //hitung ulang
+											$data = [
+												'nilai_y' => $nilai_y,
+												'nilai_q' => $nilai_q,
+												'nilai_z' => $nilai_z,
 
-									];
-									$this->db->where('alternatif_id', $key->alternatif_id);
-									$this->db->where('atlet_id', $atlet_id);
-									$this->db->update('y_q_z', $data);	
-									$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Hitung Ulang dan Edit Data</div>');
-								}
-								
+											];
+											$this->db->where('alternatif_id', $key->alternatif_id);
+											$this->db->where('atlet_id', $atlet_id);
+											$this->db->update('y_q_z', $data);	
+											$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Hitung Ulang dan Edit Data</div>');
+										}
+									
+									}
+							}else{
+								$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Rating Kecocokan di Fitur Rating Kecocokan</div>');
+								redirect('pelatih/perangkingan','refresh');
 							}
+							
 							
 						}
 	}
