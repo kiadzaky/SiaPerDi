@@ -10,70 +10,95 @@
           </div>
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-primary">
-                  <i class="far fa-user"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Total Atlet</h4>
+              <a href="<?= base_url('admin/atlet')?>">
+                <div class="card card-statistic-1">
+                  <div class="card-icon bg-primary">
+                    <i class="far fa-user"></i>
                   </div>
-                  <div class="card-body">
-                    <?= $jml_atlet ?>
+                  <div class="card-wrap">
+                    <div class="card-header">
+                      <h4 style="color: black">Total Atlet</h4>
+                    </div>
+                    <div class="card-body">
+                      <?= $jml_atlet ?>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
-            <!-- <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-danger">
-                  <i class="far fa-newspaper"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>News</h4>
+            <?php if ($this->session->userdata('jabatan_id') == 0) {
+            ?>
+             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <a href="<?= base_url('admin/alternatif')?>">
+                <div class="card card-statistic-1">
+                  <div class="card-icon bg-danger">
+                    <i class="far fa-list-alt"></i>
                   </div>
-                  <div class="card-body">
-                    42
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-warning">
-                  <i class="far fa-file"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Reports</h4>
-                  </div>
-                  <div class="card-body">
-                    1,201
+                  <div class="card-wrap">
+                    <div class="card-header">
+                      <h4 style="color: black">Jumlah Alternatif</h4>
+                    </div>
+                    <div class="card-body">
+                      <?= $jml_alternatif ?>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <div class="card card-statistic-1">
-                <div class="card-icon bg-success">
-                  <i class="fas fa-circle"></i>
-                </div>
-                <div class="card-wrap">
-                  <div class="card-header">
-                    <h4>Online Users</h4>
+              <a href="<?= base_url('admin/kriteria')?>">
+                <div class="card card-statistic-1">
+                  <div class="card-icon bg-warning">
+                    <i class="far fa-list-alt"></i>
                   </div>
-                  <div class="card-body">
-                    47
+                  <div class="card-wrap">
+                    <div class="card-header">
+                      <h4 style="color: black">Jumlah Kriteria</h4>
+                    </div>
+                    <div class="card-body">
+                      <?= $jml_kriteria ?>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div> -->
-           <!--  <div class="card-body">
-                    <p class="mb-2">Use the Bootstrap method to create modal. You need to create an HTML structure for modal and the following button will trigger it.</p>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Aw, yeah!</button>
-            </div> -->
-
+              </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <a href="<?= base_url('pelatih/nilai_atlet')?>">
+                <div class="card card-statistic-1">
+                  <div class="card-icon bg-success">
+                    <i class="fas fa-check-square"></i>
+                  </div>
+                  <div class="card-wrap">
+                    <div class="card-header">
+                      <h4 style="color: black">Atlet Yang Dinilai</h4>
+                    </div>
+                    <div class="card-body">
+                      <?= $jml_atlet_nilai ?>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6 col-12">
+              <a href="<?= base_url('pelatih/keoptimisan')?>">
+                <div class="card card-statistic-1">
+                  <div class="card-icon bg-success">
+                    <i class="fas fa-check-square"></i>
+                  </div>
+                  <div class="card-wrap">
+                    <div class="card-header">
+                      <h4 style="color: black">Atlet Yang Terpilih</h4>
+                    </div>
+                    <div class="card-body">
+                      <?= $jml_atlet_nilai ?>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <?php
+            } ?>
+           
           </div>
         </section>
       </div>

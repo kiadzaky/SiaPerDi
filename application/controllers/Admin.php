@@ -13,8 +13,11 @@ class Admin extends CI_Controller {
 	function index()
 	{
 		$data['title'] = "Dashoard";		
-		$jml_atlet = count($this->am->getData('atlet')->result()) ;
-		$data['jml_atlet'] = $jml_atlet;
+		$data['jml_atlet'] = count($this->am->getData('atlet')->result()) ;
+		$data['jml_alternatif'] = count($this->am->getData('alternatif')->result()) ;
+		$data['jml_kriteria'] = count($this->am->getData('kriteria')->result()) ;
+		$data['jml_atlet_nilai'] = count($this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama) FROM `nilai`
+			INNER JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result()) ;
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/index',$data);
@@ -56,8 +59,8 @@ class Admin extends CI_Controller {
 					if($akun_username != $username ){ // username validation
 						$data = [
 						'akun_nik' => $nik,
-						'akun_nama' => $nama_lengkap,
-						'akun_username' => $username,
+						'akun_nama' => ucwords($nama_lengkap),
+						'akun_username' => strtolower($username),
 						'akun_password' => password_hash($password2, PASSWORD_DEFAULT),
 						'jabatan_id' => $jabatan,
 						];
