@@ -18,7 +18,10 @@
               <li class="menu-header">Dashboard</li>
                 <?php if ($this->session->userdata('jabatan_id') == 0) {
                   $jabatan = 'admin';
-                }else{
+                } elseif ($this->session->userdata('jabatan_id') == 2) {
+                  $jabatan = 'kepelatihan';
+                }
+                else{
                   $jabatan = 'pelatih';
                 }
 
@@ -48,7 +51,8 @@
               </li>
               <?php
               } ?>
-              
+              <?php if ($this->session->userdata('jabatan_id') == 0 || $this->session->userdata('jabatan_id') == 1) {
+              ?>
               <li class="menu-header">Halaman Pelatih</li> 
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-pencil-ruler"></i> <span>Perhitungan</span></a>
@@ -58,6 +62,21 @@
                   <li><a class="nav-link" href="<?=base_url()?>pelatih/keoptimisan">Derajat Keoptimisan</a></li>
                 </ul>
               </li>
+              <?php
+              }  ?>
+              
+              <?php if ($this->session->userdata('jabatan_id')== 2) {
+              ?>
+              <li class="menu-header">Halaman Kepelatihan</li> 
+              <li class="nav-item dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i> <span>Laporan</span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="<?=base_url()?>kepelatihan/keoptimisan">Laporan Atlet</a></li>
+                </ul>
+              </li>
+              <?php
+              } ?>
+
             </ul>
         </aside>
       </div>

@@ -31,7 +31,10 @@ class Auth extends CI_Controller {
 					$this->session->set_userdata($data);
 					if($get_akun['jabatan_id'] == 1){ //pelatih
 						redirect('pelatih/index');
-					}else{ // admin
+					}elseif ($get_akun['jabatan_id'] == 2) { //bagian kepelatihan
+						redirect('kepelatihan/index');
+					}
+					else{ // admin
 						redirect('admin/index');
 					}
 					
