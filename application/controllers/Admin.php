@@ -213,6 +213,18 @@ class Admin extends CI_Controller {
 					$this->db->insert('rating_kecocokan', $data );
 				}
 
+				$atlet = $this->am->getQuery("SELECT DISTINCT(atlet_id) FROM `nilai`")->result();
+				foreach ($atlet as $atlet) {
+					$data = [
+						'akun_nik' => $this->session->userdata('nik'),
+						'kriteria_id' => $get_id_kriteria['kriteria_id'],
+						'atlet_id' => $atlet->atlet_id,
+						'nilai_kriteria' => '0',
+						'fuzzy_segitiga_id'=> '1',
+
+					];
+					$this->db->insert('nilai', $data);
+				}
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 			}else{ //edit
 				$data = [
@@ -278,8 +290,10 @@ class Admin extends CI_Controller {
 	}
 	function delete_alternatif($id)
 	{
+		$this->am->Delete("rating_kecocokan",["alternatif_id"=>$id]);
 		$this->am->Delete("alternatif",["alternatif_id"=>$id]);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
+		$this->session->set_flashdata('message1', '<div class="alert alert-success" role="alert">Rating Kecocokan yang memiliki alternatif tersebut Sukses Dihapus</div>');
 		redirect('admin/alternatif');
 	}
 

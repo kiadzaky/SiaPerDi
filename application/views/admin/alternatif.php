@@ -9,6 +9,7 @@
             <h1><?=$title?></h1>
           </div>
           <?= $this->session->userdata('message'); ?>
+          <?= $this->session->userdata('message1'); ?>
           <div class="row">
             <div class="col-12">
                 <div class="card">
