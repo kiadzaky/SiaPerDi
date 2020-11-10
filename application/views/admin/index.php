@@ -1,7 +1,15 @@
 <body>
   <div id="app">
     <div class="main-wrapper">
-      
+      <?php if ($this->session->userdata('jabatan_id') == 0) {
+                  $jabatan = 'admin';
+                } elseif ($this->session->userdata('jabatan_id') == 2) {
+                  $jabatan = 'kepelatihan';
+                }
+                else{
+                  $jabatan = 'pelatih';
+                }
+      ?>
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
@@ -10,7 +18,7 @@
           </div>
           <div class="row">
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-              <a href="<?= base_url('admin/atlet')?>">
+              <a href="<?= base_url('').$jabatan.'/atlet'?>">
                 <div class="card card-statistic-1">
                   <div class="card-icon bg-primary">
                     <i class="far fa-user"></i>

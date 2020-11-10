@@ -24,6 +24,7 @@
                                   <th>Nama Atlet</th>
                                   <th>Kesimpulan</th>
                                   <th>Kategori Umur</th>
+                                  <th>Cetak</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -36,7 +37,8 @@
                                     <td ><?=$no++?></td>
                                     <td ><?=$ko['atlet_nama']?></td>
                                     <td ><?=$ko['kesimpulan']?></td>
-                                    <td><?=$ko['atlet_kategori_umur']?></td>
+                                    <td><?=strtoupper($ko['atlet_kategori_umur'])?></td>
+                                    <td><a href="<?=base_url('kepelatihan/cetak/')?><?=$ko['atlet_id']?>/<?=$ko['kesimpulan']?>"><i class="fas fa-print"></i></a></td>
                                 </tr>                     
                               <?php
                               

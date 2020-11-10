@@ -32,13 +32,16 @@
               ?>
               <li class="menu-header">Halaman Admin</li>
               <li class="nav-item dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Seseorang</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Pengguna</span></a>
                 <ul class="dropdown-menu">
                   <li><a href="<?=base_url()?>admin/akun">Akun</a></li>
-                  <li><a href="<?=base_url()?>admin/atlet">Atlet</a></li>
                   
                   <li><a href="<?=base_url()?>admin/jabatan">Jabatan</a></li>
                 </ul>
+              </li>
+              <li class="">
+                <a class="nav-link" href="<?=base_url()?>admin/atlet"><i class="fas fa-running"></i> <span>Atlet</span></a>
+                
               </li>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Halaman</span></a>
@@ -51,9 +54,18 @@
               </li>
               <?php
               } ?>
-              <?php if ($this->session->userdata('jabatan_id') == 0 || $this->session->userdata('jabatan_id') == 1) {
+              <?php if ($this->session->userdata('jabatan_id') == 0 || $this->session->userdata('jabatan_id')==1 ) {
               ?>
+
               <li class="menu-header">Halaman Pelatih</li> 
+              <?php
+                if ($this->session->userdata('jabatan_id')==1) {
+                ?>
+                <li><a class="nav-link" href="<?=base_url().$jabatan.'/atlet'?>"><i class="fas fa-running"></i> <span>Atlet</span></a></li>
+                <?php
+                }
+
+              ?>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-pencil-ruler"></i> <span>Perhitungan</span></a>
                 <ul class="dropdown-menu">
@@ -65,9 +77,16 @@
               <?php
               }  ?>
               
-              <?php if ($this->session->userdata('jabatan_id')== 2) {
+              <?php if ($this->session->userdata('jabatan_id')== 0 || $this->session->userdata('jabatan_id')== 2) {
               ?>
               <li class="menu-header">Halaman Kepelatihan</li> 
+              <?php
+                if ($this->session->userdata('jabatan_id')== 2) {
+                ?>
+                <li><a class="nav-link" href="<?=base_url().$jabatan.'/atlet'?>"><i class="fas fa-running"></i> <span>Atlet</span></a></li>
+                <?php
+                }
+              ?>
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-list"></i> <span>Laporan</span></a>
                 <ul class="dropdown-menu">

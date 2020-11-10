@@ -9,15 +9,13 @@
             <h1><?=$title?></h1>
           </div>
           <?= $this->session->userdata('message'); ?>
-          <?= $this->session->userdata('message1'); ?>
-          <?= $this->session->userdata('message2'); ?>
           <div class="row">
             <div class="col-12">
                 <div class="card">
                   <div class="card-header">
                     <div class="col-md-9"><h4>TABEL <?= strtoupper($title) ?></h4></div>
                     
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#tambahModal">TAMBAH <?= strtoupper($title) ?></button> 
+                    
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -25,23 +23,24 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Kriteria</th>
-                                    <th>Aksi</th>
+                                    <th>Nama Atlet</th>
+                                    <th>Unit</th>
+                                    <!-- <th>Aksi</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                               <?php 
                               $no=1;
-                              foreach ($kriteria as $k) {
+                              foreach ($atlet as $a) {
                               ?>
                                 <tr>
                                     <td><?=$no++?></td>
-                                    <td><?=$k->kriteria_nama?></td>
-                                    <td>
-                                      <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$k->kriteria_id?>">Edit</button>
-                                      <a href="<?=base_url('admin/delete_kriteria')?>/<?=$k->kriteria_id?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
-
-                                    </td>
+                                    <td><?=$a->atlet_nama?></td>
+                                    <td><?=$a->atlet_unit?></td>
+                                    <!-- <td>
+                                      <button class=" btn btn-success" data-toggle="modal" data-target="#editModal" onclick="setId('<?= $a->atlet_id ?>', '<?=$a->atlet_nama?>', '<?=$a->atlet_unit ?>')">Edit</button>
+                                      <a href="<?=base_url('admin/delete_atlet')?>/<?= $a->atlet_id ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                    </td> -->
                                 </tr>
                               <?php
                               
@@ -70,21 +69,30 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/kriteria')?>">
+                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/atlet')?>">
                     
                     <div class="card-body">
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Kriteria</label>
+                        <label class="col-sm-3 col-form-label">Nama Atlet</label>
                         <div class="col-sm-9">
-                          <input type="text" name="kriteria_nama" class="form-control" required="" placeholder="Nama Kriteria">
+                          <input type="text" name="nama_atlet" class="form-control" required="" placeholder="Nama Atlet">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Unit Atlet</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="unit_atlet" class="form-control" required="" placeholder="Unit Atlet">
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Kriteria">
+                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Akun">
                       
                     </div>
                   </form>
@@ -97,9 +105,7 @@
           </div>
   </div>
 
-  <?php foreach ($kriteria as $k) {
-  ?>
-  <div class="modal fade" tabindex="-1" role="dialog" id="editModal<?=$k->kriteria_id?>">
+  <div class="modal fade" tabindex="-1" role="dialog" id="editModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -109,22 +115,31 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/kriteria')?>">
+                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/atlet')?>">
                     
                     <div class="card-body">
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Kriteria</label>
+                        <label class="col-sm-3 col-form-label">Nama Atlet</label>
                         <div class="col-sm-9">
-                          <input type="" name="kriteria_id" value="<?=$k->kriteria_id?>" hidden="">
-                          <input type="text" name="kriteria_nama" class="form-control" required="" value="<?=$k->kriteria_nama?>" placeholder="NIK">
+                          <input type="" id="atlet_id" name="atlet_id" hidden="">
+                          <input type="text" name="nama_atlet" id="nama_atlet_edit" class="form-control" required="" placeholder="Nama Atlet">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>
                         </div>
                       </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Unit Atlet</label>
+                        <div class="col-sm-9">
+                          <input type="text" name="unit_atlet" id="unit_atlet_edit" class="form-control" required="" placeholder="Nama Lengkap">
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Edit Kriteria">
+                      <input class="btn btn-primary" type="submit" name="submit" value="Edit Akun">
                       
                     </div>
                   </form>
@@ -136,8 +151,13 @@
             </div>
           </div>
   </div>
-  <?php
-  } ?>
- 
+
+ <script type="text/javascript">
+    function setId(atlet_id, nama, unit) {
+      $('#atlet_id').val(atlet_id);
+      $('#nama_atlet_edit').val(nama);
+      $('#unit_atlet_edit').val(unit);
+    }
+  </script>
 </body>
 </html>

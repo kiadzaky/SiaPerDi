@@ -202,7 +202,7 @@ class Admin extends CI_Controller {
 
 				$this->db->insert('kriteria', $data);
 				
-				$get_id_kriteria = $this->am->getQuery("SELECT kriteria_id FROM `kriteria` WHERE kriteria_nama = '$kriteria_nama'")->row_array();
+				$get_id_kriteria = $this->am->getQuery("SELECT kriteria_id FROM `kriteria` WHERE kriteria_nama = '$kriteria_nama'")->row_array(); //ambil id kriteria yang baru
 				$alternatif = $this->am->getQuery("SELECT alternatif_id FROM `alternatif`")->result();
 				foreach ($alternatif as $a) {
 					$data = [
@@ -229,8 +229,13 @@ class Admin extends CI_Controller {
 
 	function delete_kriteria($id)
 	{
+		$this->am->Delete("nilai",["kriteria_id"=>$id]);
+		$this->am->Delete("rating_kecocokan",["kriteria_id"=>$id]);
 		$this->am->Delete("kriteria",["kriteria_id"=>$id]);
+
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
+		$this->session->set_flashdata('message1', '<div class="alert alert-success" role="alert">Nilai yang memiliki kriteria tersebut Sukses Dihapus</div>');
+		$this->session->set_flashdata('message2', '<div class="alert alert-success" role="alert">Rating Kecocokan yang memiliki kriteria tersebut Sukses Dihapus</div>');
 		redirect('admin/kriteria');
 	}
 

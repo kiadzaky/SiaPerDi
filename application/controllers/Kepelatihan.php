@@ -22,6 +22,51 @@ class Kepelatihan extends CI_Controller {
 		$this->load->view('admin/part/footer');
 	}
 
+	function atlet()
+	{
+		$data['title'] = "Data Atlet";	
+		$data['atlet'] = $this->am->getData('atlet')->result() ;
+		
+		$this->load->view('admin/part/head');
+		$this->load->view('admin/part/navbar');
+		$this->load->view('kepelatihan/atlet',$data);
+		$this->load->view('admin/part/js');
+		$this->load->view('admin/part/sidebar',$data);
+		$this->load->view('admin/part/footer');
+	}
+
+	function getCetak($id)
+	{
+		$data = [];
+
+		$atlet = $this->db->get_where('atlet', array('atlet_id'=>$id),1)->result();
+		
+		for($i = 0; $i<count($atlet); $i++){
+			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id;
+			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
+			$data[$i]['atlet_unit'] = $atlet[$i]->atlet_unit;
+			$data[$i]['atlet_kategori_umur'] = $atlet[$i]->atlet_kategori_umur;
+			$nilai = $this->am->getQuery("SELECT * FROM `nilai` 
+				JOIN kriteria ON nilai.kriteria_id = kriteria.kriteria_id
+				WHERE atlet_id =  '$id'")->result();
+			for($j = 0 ; $j < count($nilai) ; $j++){
+				$data[$i]['nilai'][$j]['kriteria_nama'] = $nilai[$j]->kriteria_nama;
+				$data[$i]['nilai'][$j]['nilai_kriteria'] = $nilai[$j]->nilai_kriteria;
+
+			}
+		}
+		// print_r(json_encode($data));
+		return $data;
+	}
+
+	function cetak($id, $kesimpulan)
+	{
+		$data['detail_atlet'] = $this->getCetak($id);
+		$data['kesimpulan'] = $kesimpulan;
+		// print_r(json_encode($data));
+		$this->load->view('kepelatihan/cetak', $data);
+	}
+
 	function getKeoptimisan()
 	{
 		$data =[];
@@ -56,7 +101,8 @@ class Kepelatihan extends CI_Controller {
 			  }
 			  $data[$i]['temp'] = $temp;  
 			  $data[$i]['temp_alternatif'] = $temp_alternatif;  
-			  $data[$i]['kesimpulan'] = $kesimpulan;  
+			  $data[$i]['kesimpulan'] = $kesimpulan; 
+			   
 		}
 		return $data;
 		// print_r(json_encode($data));

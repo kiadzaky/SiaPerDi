@@ -22,6 +22,20 @@ class Pelatih extends CI_Controller {
 		$this->load->view('admin/part/sidebar',$data);
 		$this->load->view('admin/part/footer');
 	}	
+
+	function atlet()
+	{
+		$data['title'] = "Data Atlet";	
+		$data['atlet'] = $this->am->getData('atlet')->result() ;
+		
+		$this->load->view('admin/part/head');
+		$this->load->view('admin/part/navbar');
+		$this->load->view('pelatih/atlet',$data);
+		$this->load->view('admin/part/js');
+		$this->load->view('admin/part/sidebar',$data);
+		$this->load->view('admin/part/footer');
+	}
+
 	function getNilai()
 	{
 		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result();
