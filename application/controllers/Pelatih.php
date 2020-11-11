@@ -227,12 +227,13 @@ class Pelatih extends CI_Controller {
 	{
 		$kriteria = $this->am->getData('kriteria')->result();
 		$jml_kriteria = count($kriteria);
+		// echo $jml_kriteria;
 		$alternatif = $this->am->getData('alternatif')->result();
 		$jml_alternatif = count($alternatif);
 		$temp = 0;
 				$nilai_atlet = $this->am->getQuery("SELECT * FROM `nilai`
-						JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
-						WHERE atlet_id = $atlet_nama ORDER BY kriteria_id ASC")->result();
+					JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
+					WHERE atlet_id = $atlet_nama ORDER BY kriteria_id ASC")->result();
 						if ($nilai_atlet == null) {
 							$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Mohon Isi Nilai Atlet</div>');
 						}else{
@@ -246,19 +247,19 @@ class Pelatih extends CI_Controller {
 						                ORDER BY alternatif_id, kriteria_id asc
 						                ")->result();
 
-										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Y
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Y
 											$nilai_perkalian = ($nilai_atlet[$i]->n1 * $rating_kecocokan[$i]->n1) + $temp;
 											$temp = $nilai_perkalian;
 										}
 										$nilai_y = (1/$jml_kriteria)* $nilai_perkalian ;
 										$temp = 0; $nilai_perkalian = 0;
-										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Q
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Q
 											$nilai_perkalian = ($nilai_atlet[$i]->n2 * $rating_kecocokan[$i]->n2) + $temp;
 											$temp = $nilai_perkalian;
 										}
 										$nilai_q = (1/$jml_kriteria)* $nilai_perkalian ;
 										$temp = 0; $nilai_perkalian = 0;
-										for ($i=0; $i < $jml_kriteria-1 ; $i++) {  //nilai Z
+										for ($i=0; $i < $jml_kriteria ; $i++) {  //nilai Z
 											$nilai_perkalian = ($nilai_atlet[$i]->n3 * $rating_kecocokan[$i]->n3) + $temp;
 											$temp = $nilai_perkalian;
 										}
