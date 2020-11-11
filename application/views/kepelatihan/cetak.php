@@ -52,7 +52,7 @@
 								NILAI
 								<br>
 								<br>
-								<table border="1">
+								<table border="1" cellpadding="4">
 									<thead  width="30%">
 										<?php foreach ($da['nilai'] as $n) {
 										?>
@@ -64,7 +64,7 @@
 										<tr>
 											<?php foreach ($da['nilai'] as $n) {
 											?>
-											<td  width="30%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
+											<td width="30%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
 											<?php
 											} ?>
 										</tr>
