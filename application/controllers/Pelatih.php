@@ -316,35 +316,20 @@ class Pelatih extends CI_Controller {
 				JOIN alternatif ON integral.alternatif_id = alternatif.alternatif_id
 				WHERE atlet_id = ".$atlet[$i]->atlet_id."
 				ORDER BY integral.alternatif_id ASC")->result();
-			$temp = 0;
-        	$temp_alternatif = " ";
 			for ($j=0; $j < count($integral) ; $j++) { 
-				
-				$data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
-				$data[$i]['integral'][$j]['alternatif_nama'] = $integral[$j]->alternatif_nama;
-			  	$data[$i]['integral'][$j]['a_0'] = $integral[$j]->a_0;
-			  	$data[$i]['integral'][$j]['a_0_5'] = $integral[$j]->a_0_5;
-			  	$data[$i]['integral'][$j]['a_1'] = $integral[$j]->a_1;
-			  	if($integral[$j]->a_1 > $temp){
-	                 	$temp = $integral[$j]->a_1;
-	                 	$temp_alternatif = $integral[$j]->alternatif_nama;
-	                 	$kesimpulan = $temp_alternatif;
-
-
-	            }elseif($integral[$j]->a_1 == $temp){
-	                    $kesimpulan = $integral[$j]->alternatif_nama." Dan ". $temp_alternatif;
-	            }else{
-	                    $kesimpulan = $temp_alternatif;
-	            }
-	               
-			  }
-			  $data[$i]['temp'] = $temp;  
-			  $data[$i]['temp_alternatif'] = $temp_alternatif;  
-			  $data[$i]['kesimpulan'] = $kesimpulan;  
+					
+					$data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
+					$data[$i]['integral'][$j]['alternatif_nama'] = $integral[$j]->alternatif_nama;
+				  	$data[$i]['integral'][$j]['a_0'] = $integral[$j]->a_0;
+				  	$data[$i]['integral'][$j]['a_0_5'] = $integral[$j]->a_0_5;
+				  	$data[$i]['integral'][$j]['a_1'] = $integral[$j]->a_1;
+			}
 		}
 		return $data;
 		// print_r(json_encode($data));
 	}
+
+	
 
 	function getKeoptimisanByNama($atlet_nama_cari)
 	{
@@ -385,37 +370,6 @@ class Pelatih extends CI_Controller {
 		return $data;
 		// print_r(json_encode($data));
 	}
-
-	function keoptimisan()
-	{
-		$data['title'] = "Data Derajat Keoptimisan Atlet";
-		$data['keoptimisan'] = $this->getKeoptimisan();
-		if(isset($_GET['cari'])){
-			$atlet_nama_cari = $_GET['atlet_nama_cari'];
-			$data['keoptimisan'] = $this->getKeoptimisanByNama($atlet_nama_cari);
-		}
-		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT atlet.atlet_nama, atlet.atlet_id FROM `integral`
-			RIGHT JOIN atlet on integral.atlet_id = atlet.atlet_id
-			RIGHT JOIN y_q_z ON y_q_z.atlet_id = atlet.atlet_id
-			WHERE integral.integral_id is null")->result();
-		$this->load->view('admin/part/head');
-		$this->load->view('admin/part/navbar');
-		$this->load->view('admin/part/js');
-		$this->load->view('admin/part/sidebar',$data);
-		
-		$this->load->view('pelatih/keoptimisan',$data);
-		$this->load->view('admin/part/footer');
-
-		if(isset($_POST['submit'])){
-			$atlet_nama = $this->input->post('atlet_nama');
-			$atlet_id = $this->input->post('atlet_id');
-		
-			$this->hitungKeoptimisan($atlet_nama, $atlet_id);	
-			
-			redirect('pelatih/keoptimisan');
-
-		} // submit
-	}
 	function hitungKeoptimisan($atlet_nama, $atlet_id)
 	{
 			$y_q_z = $this->am->getQuery("SELECT * FROM `y_q_z`
@@ -451,4 +405,68 @@ class Pelatih extends CI_Controller {
 				
 			}
 	}
+	function hitungKategoriPertandingan($atlet_id)
+	{
+		$integral = $this->am->getQuery("SELECT * FROM `integral`
+				JOIN alternatif ON integral.alternatif_id = alternatif.alternatif_id
+				WHERE atlet_id = '$atlet_id'
+				ORDER BY integral.alternatif_id ASC")->result();
+			$temp = 0;
+        	$temp_alternatif = " ";
+			for ($j=0; $j < count($integral) ; $j++) { 
+					
+					// $data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
+					// $data[$i]['integral'][$j]['alternatif_nama'] = $integral[$j]->alternatif_nama;
+				 //  	$data[$i]['integral'][$j]['a_0'] = $integral[$j]->a_0;
+				 //  	$data[$i]['integral'][$j]['a_0_5'] = $integral[$j]->a_0_5;
+				 //  	$data[$i]['integral'][$j]['a_1'] = $integral[$j]->a_1;
+				  	if($integral[$j]->a_1 > $temp){
+		                 	$temp = $integral[$j]->a_1;
+		                 	$temp_alternatif = $integral[$j]->alternatif_nama;
+		                 	$kesimpulan = $temp_alternatif;
+
+
+		            }elseif($integral[$j]->a_1 == $temp){
+		                    $kesimpulan = $integral[$j]->alternatif_nama." Dan ". $temp_alternatif;
+		            }else{
+		                    $kesimpulan = $temp_alternatif;
+		            }	               
+			}
+			$data =[
+				'atlet_id'=>$atlet_id,
+				'kategori_pertandingan_atlet'=>$kesimpulan,
+			];
+			$this->db->insert('kategori_pertandingan_atlet', $data);
+	}
+	function keoptimisan()
+	{
+		$data['title'] = "Data Derajat Keoptimisan Atlet";
+		$data['keoptimisan'] = $this->getKeoptimisan();
+		if(isset($_GET['cari'])){
+			$atlet_nama_cari = $_GET['atlet_nama_cari'];
+			$data['keoptimisan'] = $this->getKeoptimisanByNama($atlet_nama_cari);
+		}
+		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT atlet.atlet_nama, atlet.atlet_id FROM `integral`
+			RIGHT JOIN atlet on integral.atlet_id = atlet.atlet_id
+			RIGHT JOIN y_q_z ON y_q_z.atlet_id = atlet.atlet_id
+			WHERE integral.integral_id is null")->result();
+		$this->load->view('admin/part/head');
+		$this->load->view('admin/part/navbar');
+		$this->load->view('admin/part/js');
+		$this->load->view('admin/part/sidebar',$data);
+		
+		$this->load->view('pelatih/keoptimisan',$data);
+		$this->load->view('admin/part/footer');
+
+		if(isset($_POST['submit'])){
+			$atlet_nama = $this->input->post('atlet_nama');
+			$atlet_id = $this->input->post('atlet_id');
+			
+			$this->hitungKeoptimisan($atlet_nama, $atlet_id);	
+			$this->hitungKategoriPertandingan($atlet_nama);
+			redirect('pelatih/keoptimisan');
+
+		} // submit
+	}
+	
 }

@@ -131,7 +131,7 @@
                         foreach ($kriteria as $k) {
                         ?>
                         <label>Nilai <?= $k->kriteria_nama?></label>
-                        <input type="" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" required ></br>
+                        <input type="number" min="0" max="100" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" required ></br>
                         <?php
                         }
                         ?>

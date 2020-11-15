@@ -121,13 +121,17 @@ class Admin extends CI_Controller {
 		if (isset($_POST['submit'])) {
 
 			$nama_atlet = $this->input->post('nama_atlet');
+			$jkel_atlet = $this->input->post('jkel_atlet');
 			$unit_atlet = $this->input->post('unit_atlet');
+			$kategori_umur_atlet = $this->input->post('kategori_umur_atlet');
 			$atlet_id = $this->input->post('atlet_id');
 
 			if($atlet_id == null){ // tambah
 				$data =[
 					'atlet_nama' => $nama_atlet,
+					'atlet_jkel' => $jkel_atlet,
 					'atlet_unit' => $unit_atlet,
+					'atlet_kategori_umur'=> $kategori_umur_atlet,
 
 				];
 				$this->am->insertData('atlet',$data);
@@ -138,7 +142,9 @@ class Admin extends CI_Controller {
 				$data =[
 					'atlet_id' => $atlet_id,
 					'atlet_nama' => $nama_atlet,
+					'atlet_jkel' => $jkel_atlet,
 					'atlet_unit' => $unit_atlet,
+					'atlet_kategori_umur'=> $kategori_umur_atlet,
 
 				];
 				$this->db->where('atlet_id', $atlet_id);

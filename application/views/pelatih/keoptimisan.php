@@ -35,7 +35,6 @@
                                 <tr>
                                   <th>No</th>
                                   <th>Nama Atlet</th>
-                                  <th>Kesimpulan</th>
                                   <th>Alternatif</th>
                                   <th>Nilai A = 0</th>
                                   <th>Nilai A = 0,5</th>
@@ -53,7 +52,7 @@
                                 <tr>
                                     <td rowspan="<?= $jml ?>"><?=$no++?></td>
                                     <td rowspan="<?= $jml ?>"><?=$ko['atlet_nama']?></td>
-                                    <td rowspan="<?= $jml ?>"><?=$ko['kesimpulan']?></td>
+                                    <!-- <td rowspan="<?= $jml ?>"><?=$ko['kesimpulan']?></td> -->
                                     <!-- <td rowspan="<?= $jml ?>">
                                       <form action="" method="POST"><input type="" name="atlet_nama" value="<?= $ko['atlet_id'] ?>" hidden><input type="" name="atlet_id" value="<?= $ko['atlet_id'] ?>" hidden> <input type="submit" name="submit" value="Hitung Ulang" class="btn btn-success"></form>
                                     </td> -->

@@ -14,8 +14,6 @@
                 <div class="card">
                   <div class="card-header">
                     <div class="col-md-9"><h4>TABEL <?= strtoupper($title) ?></h4></div>
-                    
-                    
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -24,8 +22,9 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Nama Atlet</th>
+                                    <th>Jenis Kelamin</th>
                                     <th>Unit</th>
-                                    <!-- <th>Aksi</th> -->
+                                    <th>Kategori Umur</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,12 +34,11 @@
                               ?>
                                 <tr>
                                     <td><?=$no++?></td>
-                                    <td><?=$a->atlet_nama?></td>
-                                    <td><?=$a->atlet_unit?></td>
-                                    <!-- <td>
-                                      <button class=" btn btn-success" data-toggle="modal" data-target="#editModal" onclick="setId('<?= $a->atlet_id ?>', '<?=$a->atlet_nama?>', '<?=$a->atlet_unit ?>')">Edit</button>
-                                      <a href="<?=base_url('admin/delete_atlet')?>/<?= $a->atlet_id ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
-                                    </td> -->
+                                    <td><?=ucwords($a->atlet_nama)?></td>
+                                    <td><?=strtoupper($a->atlet_jkel)?></td>
+                                    <td><?=strtoupper($a->atlet_unit)?></td>
+                                    <td><?=strtoupper($a->atlet_kategori_umur)?></td>
+                                    
                                 </tr>
                               <?php
                               
@@ -82,9 +80,36 @@
                         </div>
                       </div>
                       <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Jenis Kelamin Atlet</label>
+                        <div class="col-sm-9">
+                          <select name="jkel_atlet" class="form-control">
+                            <option value="putra">Putra </option>
+                            <option value="putri">Putri</option>
+
+                          </select>
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Unit Atlet</label>
                         <div class="col-sm-9">
                           <input type="text" name="unit_atlet" class="form-control" required="" placeholder="Unit Atlet">
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Kategori Umur Atlet</label>
+                        <div class="col-sm-9">
+                          <select name="kategori_umur_atlet" class="form-control">
+                            <option value="pra remaja">Pra Remaja</option>
+                            <option value="remaja">Remaja </option>
+                            <option value="dewasa">Dewasa</option>
+
+                          </select>
                           <div class="invalid-feedback">
                            Tolong Diisi dengan Benar
                           </div>
@@ -129,9 +154,36 @@
                         </div>
                       </div>
                       <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Jenis Kelamin Atlet</label>
+                        <div class="col-sm-9">
+                          <select name="jkel_atlet" id="jkel_atlet_edit" class="form-control">
+                            <option value="putra">Putra </option>
+                            <option value="putri">Putri</option>
+
+                          </select>
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Unit Atlet</label>
                         <div class="col-sm-9">
                           <input type="text" name="unit_atlet" id="unit_atlet_edit" class="form-control" required="" placeholder="Nama Lengkap">
+                          <div class="invalid-feedback">
+                           Tolong Diisi dengan Benar
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Kategori Umur Atlet</label>
+                        <div class="col-sm-9">
+                          <select name="kategori_umur_atlet" id="kategori_umur_atlet_edit" class="form-control">
+                            <option value="pra remaja">Pra Remaja</option>
+                            <option value="remaja">Remaja </option>
+                            <option value="dewasa">Dewasa</option>
+
+                          </select>
                           <div class="invalid-feedback">
                            Tolong Diisi dengan Benar
                           </div>
@@ -151,12 +203,38 @@
             </div>
           </div>
   </div>
+<!-- Ini merupakan script yang terpenting -->
+<!-- <script type="text/javascript">
+    $(document).ready(function() {
 
+      $('.editModal').click(function(){
+          
+          var atlet_id = $(this).attr('atlet_id'); //get the attribute value
+          
+          $.ajax({
+              url : "<?php echo base_url(); ?>admin/getDetailAtlet/",
+              data:{atlet_id : atlet_id},
+              method:'GET',
+              dataType:'json',
+              success:function(data) {
+                $('#atlet_id').val(data.atlet_id); //hold the response in id and show on popup
+                $('#atlet_nama').val(data.atlet_nama);
+                $('#atlet_unit').val(data.atlet_unit);
+                $('#kriteria_nama').text(data.kriteria_nama);
+                // $('#editModal').modal({backdrop: 'static', keyboard: true, show: true});
+                $('#editModal').modal('show')
+            }
+          });
+      });
+    });
+</script> -->
  <script type="text/javascript">
-    function setId(atlet_id, nama, unit) {
+    function setId(atlet_id, nama, jkel, unit, kategori_umur) {
       $('#atlet_id').val(atlet_id);
+      $('#jkel_atlet_edit').val(jkel);
       $('#nama_atlet_edit').val(nama);
       $('#unit_atlet_edit').val(unit);
+      $('#kategori_umur_atlet_edit').val(kategori_umur);
     }
   </script>
 </body>

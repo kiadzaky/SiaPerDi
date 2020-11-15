@@ -13,7 +13,45 @@
             <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <div class="col-md-9"><h4>TABEL <?= strtoupper($title) ?></h4></div>
+                    <div class="col-md-9">
+                      <h4>TABEL <?= strtoupper($title) ?></h4>
+                      <button class="btn btn-primary"  onclick="dropdown_klik()">Get Prioritas Atlet</button>
+                      <br>
+                      <form method="GET">
+                      <div class="row" id="dropdown-getprioritas" >
+                        
+                        <div class="col-md-12 d-flex flex">
+                          <div class="col-sm-3">                        
+                          <label>Jenis Kelamin</label>
+                          <select class="form-control" name="atlet_jkel">
+                              <option value="putra">Putra</option>
+                              <option value="putri">Putri</option>
+                          </select>
+                          </div>  
+                          <div class="col-sm-3">
+                            <label>Kesimpulan</label>
+                              <select class="form-control" name="atlet_kesimpulan">
+                                <option value="tanding">Tanding</option>
+                                <option value="serang hindar">Serang Hindar</option>
+                                <option value="seni">Seni</option>
+                              </select>
+                          </div>
+                          <div class="col-sm-3">
+                            <label>Kategori Umur</label>
+                            <select class="form-control" name="atlet_kategori_umur">
+                              <option value="pra remaja">Pra Remaja</option>
+                              <option value="remaja">Remaja </option>
+                              <option value="dewasa">Dewasa</option>
+                            </select>
+                          </div>
+
+                        </div>
+                        <div class="d-flex justify-content-start pl-4 pt-2">
+                          <button name="cari" class="d-flex btn-success btn justify-content-start">Get Data</button>
+                        </div>
+                      </div>
+                      </form>
+                    </div>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -22,6 +60,7 @@
                                 <tr>
                                   <th>No</th>
                                   <th>Nama Atlet</th>
+                                  <th>Jenis Kelamin</th>
                                   <th>Kesimpulan</th>
                                   <th>Kategori Umur</th>
                                   <th>Cetak</th>
@@ -35,10 +74,11 @@
                               ?>
                                 <tr>
                                     <td ><?=$no++?></td>
-                                    <td ><?=$ko['atlet_nama']?></td>
-                                    <td ><?=$ko['kesimpulan']?></td>
-                                    <td><?=strtoupper($ko['atlet_kategori_umur'])?></td>
-                                    <td><a href="<?=base_url('kepelatihan/cetak/')?><?=$ko['atlet_id']?>/<?=$ko['kesimpulan']?>"><i class="fas fa-print"></i></a></td>
+                                    <td ><?=ucwords($ko->atlet_nama)?></td>
+                                    <td><?=strtoupper($ko->atlet_jkel)?></td>
+                                    <td ><?=$ko->kategori_pertandingan_atlet?></td>
+                                    <td><?=strtoupper($ko->atlet_kategori_umur)?></td>
+                                    <td><a href="<?=base_url('kepelatihan/cetak/')?><?=$ko->atlet_id?>/<?=$ko->kategori_pertandingan_atlet?>"><i class="fas fa-print"></i></a></td>
                                 </tr>                     
                               <?php
                               
@@ -99,4 +139,15 @@
   </div>
 
 </body>
+<script type="text/javascript">
+  var dropdown = document.getElementById('dropdown-getprioritas');
+  dropdown.style.display = 'none';
+  function dropdown_klik(argument) {
+    if(dropdown.style.display === "block"){
+      dropdown.style.display = "none";
+    }else{
+      dropdown.style.display = "block";
+    }
+  }
+</script>
 </html>
