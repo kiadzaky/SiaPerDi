@@ -164,6 +164,7 @@ class Pelatih extends CI_Controller {
 	function delete_nilai($id)
 	{
 		$this->am->Delete("nilai",["atlet_id"=>$id]);
+		$this->am->Delete("kategori_pertandingan_atlet",["atlet_id"=>$id]);
 		$this->am->Delete("y_q_z",["atlet_id"=>$id]);
 		$this->am->Delete("integral",["atlet_id"=>$id]);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
