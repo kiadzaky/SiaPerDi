@@ -37,3 +37,36 @@
   <script src="<?= base_url() ?>/assets/js/page/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
 <script src="<?= base_url() ?>/assets/js/page/jquery.dataTables.js"></script>
+<script src="<?=base_url('upup/')?>/upup.min.js"></script>
+<script>
+    UpUp.start({
+      'content-url': '<?=base_url('auth')?>',
+      'service-worker-url': '<?=base_url('upup/')?>upup.sw.min.js',
+      // 'assets': ['css/bootstrap.min.css', 'css/offline.css']
+    });
+</script>
+<script>
+   if ('serviceWorker' in navigator) {
+      console.log("Will the service worker register?");
+      navigator.serviceWorker.register('<?=base_url('upup/')?>upup.sw.min.js')
+        .then(function(reg){
+          console.log("Yes, it did.");
+         
+       }).catch(function(err) {
+          console.log("No it didn't. This happened:", err);
+          
+      });
+   }
+  </script>
+  <script type="text/javascript" src="<?=base_url('upup/')?>/addtohomescreen.js"></script>
+  <script type="text/javascript" src="<?=base_url('upup/')?>/addtohomescreen.min.js"></script>
+  <script type="text/javascript">
+    if(
+    (("standalone" in window.navigator) && !window.navigator.standalone) // ios
+    || //or
+      (!window.matchMedia('(display-mode: standalone)').matches)// android
+    ){
+      addToHomescreen();
+    }
+
+  </script>
