@@ -135,7 +135,7 @@ class Pelatih extends CI_Controller {
 					'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
 					];
 					$this->db->insert('nilai', $data);
-
+					helper_log($this->session->userdata('nik'), 'Tambah Nilai Atlet '.$this->input->post('atlet_nama'));
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 				}else{ //EDIT DATA
 					$data = [
@@ -151,6 +151,7 @@ class Pelatih extends CI_Controller {
 					// edit nilai keoptimisan dan nilai perangkingan
 					$this->hitungPerangkingan($atlet_id, $atlet_id);
 					$this->hitungKeoptimisan($atlet_id, $atlet_id);
+					helper_log($this->session->userdata('nik'), 'Edit Nilai Atlet '.$this->input->post('atlet_nama'));
 				}
 				
 			}
@@ -167,6 +168,7 @@ class Pelatih extends CI_Controller {
 		$this->am->Delete("kategori_pertandingan_atlet",["atlet_id"=>$id]);
 		$this->am->Delete("y_q_z",["atlet_id"=>$id]);
 		$this->am->Delete("integral",["atlet_id"=>$id]);
+		helper_log($this->session->userdata('nik'), 'Delete Nilai Atlet '.$id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('pelatih/nilai_atlet');
 	}
@@ -220,7 +222,9 @@ class Pelatih extends CI_Controller {
 			$atlet_id = $this->input->post('atlet_id');
 			$atlet_nama = $this->input->post('atlet_nama');
 			$this->hitungPerangkingan($atlet_nama, $atlet_id);
-				redirect('pelatih/perangkingan');
+			helper_log($this->session->userdata('nik'), 'Tambah Perangkingan Atlet '.$this->input->post('atlet_nama'));
+			redirect('pelatih/perangkingan');
+			
 			
 		}//submit
 	}
@@ -465,7 +469,9 @@ class Pelatih extends CI_Controller {
 			
 			$this->hitungKeoptimisan($atlet_nama, $atlet_id);	
 			$this->hitungKategoriPertandingan($atlet_nama);
+			helper_log($this->session->userdata('nik'), 'Tambah Keoptimisan Atlet '.$this->input->post('atlet_nama'));
 			redirect('pelatih/keoptimisan');
+			
 
 		} // submit
 	}

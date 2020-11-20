@@ -23,6 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Id Jabatan</th>
                                     <th>Nama Jabatan</th>
                                     <th>Aksi</th>
                                 </tr>
@@ -34,9 +35,10 @@
                               ?>
                                 <tr>
                                     <td><?=$no++?></td>
+                                    <td><?=$j->jabatan_id?></td>
                                     <td><?=$j->jabatan_nama?></td>
                                     <td>
-                                      <a href="<?= base_url('admin/delete_jabatan')?><?=$j->jabatan_id?>"><button class="btn btn-danger">Hapus</button></a>
+                                      <a href="<?= base_url('admin/delete_jabatan/')?><?=$j->jabatan_id?>"><button class="btn btn-danger">Hapus</button></a>
 
                                     </td>
                                 </tr>
@@ -71,68 +73,27 @@
                     
                     <div class="card-body">
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">NIK</label>
+                        <label class="col-sm-3 col-form-label">Id Jabatan</label>
                         <div class="col-sm-9">
-                          <input type="text" name="nik" class="form-control" required="" placeholder="NIK">
+                          <input type="number" name="jabatan_id" class="form-control" required="" placeholder="Jabatan ID">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>
                         </div>
                       </div>
                       <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Lengkap</label>
+                        <label class="col-sm-3 col-form-label">Nama Jabatan</label>
                         <div class="col-sm-9">
-                          <input type="text" name="nama_lengkap" class="form-control" required="" placeholder="Nama Lengkap">
+                          <input type="text" name="jabatan_nama" class="form-control" required="" placeholder="Nama Jabatan">
                           <div class="invalid-feedback">
                            Tolong Diisi dengan Benar
                           </div>
                         </div>
                       </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Username</label>
-                        <div class="col-sm-9">
-                          <input type="text" name="username" class="form-control" required="" placeholder="Username">
-                          <div class="valid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Jabatan</label>
-                        <div class="col-sm-9">
-                          <select name="jabatan" class="form-control">
-                            <?php foreach ($jabatan as $j) {
-                              ?>
-                              <option value="<?=$j->jabatan_id?>"><?=$j->jabatan_nama?></option>
-                              <?php
-                            } ?>
-                          </select>
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Password</label>
-                        <div class="col-sm-9">
-                          <input type="password" name="password1" class="form-control" required="" placeholder="Password">
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <div class="form-group mb-0 row">
-                        <label class="col-sm-3 col-form-label">Ketik Ulang Password</label>
-                        <div class="col-sm-9">
-                          <input type="password" name="password2" class="form-control" required="" placeholder="Password">
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
+                      
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Akun">
+                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Jabatan">
                       
                     </div>
                   </form>
@@ -144,7 +105,5 @@
             </div>
           </div>
   </div>
-
- 
 </body>
 </html>

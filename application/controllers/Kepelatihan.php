@@ -113,7 +113,7 @@ class Kepelatihan extends CI_Controller {
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/part/js');
 		$this->load->view('admin/part/sidebar',$data);
-		$this->load->view('kepelatihan/keoptimisan',$data);
+		$this->load->view('kepelatihan/laporan_keoptimisan',$data);
 		$this->load->view('admin/part/footer');
 	}
 }

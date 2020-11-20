@@ -18,6 +18,8 @@ class Admin extends CI_Controller {
 		$data['jml_kriteria'] = count($this->am->getData('kriteria')->result()) ;
 		$data['jml_atlet_nilai'] = count($this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama) FROM `nilai`
 			INNER JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result()) ;
+		$data['log'] = $this->am->getQuery("SELECT log_id, log_aktivitas, akun.akun_nama FROM `log` 
+			JOIN akun ON log.akun_nik = akun.akun_nik")->result();
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/index',$data);
@@ -66,6 +68,7 @@ class Admin extends CI_Controller {
 						];
 						$this->am->insertData('akun',$data);
 						$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+						helper_log($this->session->userdata('nik'), 'Tambah Akun '.$nama_lengkap);
 						redirect('admin/akun');
 					}else{
 						$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Username Telah Terdaftar</div>');
@@ -88,6 +91,7 @@ class Admin extends CI_Controller {
 				$this->db->where('akun_nik', $nik_edit);
 				$this->db->update('akun', $data);	
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Edit</div>');
+				helper_log($this->session->userdata('nik'), 'Edit Akun '.$nama_lengkap);
 					redirect('admin/akun');	
 			}
 			
@@ -97,6 +101,7 @@ class Admin extends CI_Controller {
 	function delete_akun($id)
 	{
 		$this->am->Delete("akun",["akun_nik"=>$id]);
+		helper_log($this->session->userdata('nik'), 'Delete Akun NIK : '.$id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('admin/akun');
 	}
@@ -136,6 +141,7 @@ class Admin extends CI_Controller {
 				];
 				$this->am->insertData('atlet',$data);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Ditambahkan</div>');
+				helper_log($this->session->userdata('nik'), 'Tambah Atlet '.$nama_atlet);
 				redirect('admin/atlet');
 			} else{ //edit
 				
@@ -150,6 +156,7 @@ class Admin extends CI_Controller {
 				$this->db->where('atlet_id', $atlet_id);
 				$this->db->update('atlet', $data);	
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Berhasil Edit</div>');
+				helper_log($this->session->userdata('nik'), 'Edit Atlet '.$nama_atlet);
 				redirect('admin/atlet');	
 			}
 		}//submit
@@ -157,7 +164,10 @@ class Admin extends CI_Controller {
 
 	function delete_atlet($id)
 	{
+		$this->am->Delete("nilai",["atlet_id"=>$id]);
 		$this->am->Delete("atlet",["atlet_id"=>$id]);
+
+		helper_log($this->session->userdata('nik'), 'Delete Atlet '.$id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('admin/atlet');
 	}
@@ -176,11 +186,35 @@ class Admin extends CI_Controller {
 		
 		$this->load->view('admin/jabatan',$data);
 		$this->load->view('admin/part/footer');
+		
+
+		if(isset($_POST['submit'])){
+			$jabatan_id = $this->input->post('jabatan_id');
+			$jabatan_nama = $this->input->post('jabatan_nama');
+			$get_jabatan = $this->db->get_where('jabatan',array('jabatan_id'=>$jabatan_id))->row_array();
+			var_dump($get_jabatan);
+			if($jabatan_id != $get_jabatan['jabatan_id']){
+				$data = [
+					'jabatan_id' => $jabatan_id,
+					'jabatan_nama'=> $jabatan_nama,
+
+				];
+				$this->db->insert('jabatan', $data);
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Tambah Jabatan</div>');
+				helper_log($this->session->userdata('nik'), 'Tambah Jabatan '.$jabatan_nama);
+				redirect('admin/jabatan');
+			}else{
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">Gagal Tambah Karena ID atau Username Sama</div>');
+				redirect('admin/jabatan');
+			}
+			
+		}
 	}
 
 	function delete_jabatan($id)
 	{
 		$this->am->Delete("jabatan",["jabatan_id"=>$id]);
+		helper_log($this->session->userdata('nik'), 'Delete Jabatan '.$id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('admin/jabatan');
 	}
@@ -207,7 +241,7 @@ class Admin extends CI_Controller {
 				];
 
 				$this->db->insert('kriteria', $data);
-				
+				helper_log($this->session->userdata('nik'), 'Tambah Kriteria '.$kriteria_nama);
 				$get_id_kriteria = $this->am->getQuery("SELECT kriteria_id FROM `kriteria` WHERE kriteria_nama = '$kriteria_nama'")->row_array(); //ambil id kriteria yang baru
 				$alternatif = $this->am->getQuery("SELECT alternatif_id FROM `alternatif`")->result();
 				foreach ($alternatif as $a) {
@@ -217,6 +251,7 @@ class Admin extends CI_Controller {
 						'fuzzy_segitiga_id' => 1,
 					];
 					$this->db->insert('rating_kecocokan', $data );
+					helper_log($this->session->userdata('nik'), 'Tambah Rating Kecocokan '.$a->alternatif_id);
 				}
 
 				$atlet = $this->am->getQuery("SELECT DISTINCT(atlet_id) FROM `nilai`")->result();
@@ -230,6 +265,7 @@ class Admin extends CI_Controller {
 
 					];
 					$this->db->insert('nilai', $data);
+					helper_log($this->session->userdata('nik'), 'Tambah Nilai Per Atlet '.$atlet->atlet_id);
 				}
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 			}else{ //edit
@@ -242,6 +278,7 @@ class Admin extends CI_Controller {
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
 			}
 			redirect('admin/kriteria');
+			helper_log($this->session->userdata('nik'), 'Edit Kriteria '.$kriteria_id);
 		}
 	}
 
@@ -254,6 +291,9 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		$this->session->set_flashdata('message1', '<div class="alert alert-success" role="alert">Nilai yang memiliki kriteria tersebut Sukses Dihapus</div>');
 		$this->session->set_flashdata('message2', '<div class="alert alert-success" role="alert">Rating Kecocokan yang memiliki kriteria tersebut Sukses Dihapus</div>');
+		helper_log($this->session->userdata('nik'), 'Hapus Nilai dari Kriteria '.$kriteria_id);
+		helper_log($this->session->userdata('nik'), 'Hapus Rating Kecocokan dari Kriteria '.$kriteria_id);
+		helper_log($this->session->userdata('nik'), 'Hapus Kriteria '.$kriteria_id);
 		redirect('admin/kriteria');
 	}
 
@@ -279,7 +319,7 @@ class Admin extends CI_Controller {
 				];
 
 				$this->db->insert('alternatif', $data);
-
+				helper_log($this->session->userdata('nik'), 'Tambah Alternatif '.$alternatif_nama);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 			}else{ //edit
 				$data = [
@@ -288,6 +328,7 @@ class Admin extends CI_Controller {
 
 				$this->db->where('alternatif_id', $alternatif_id);
 				$this->db->update('alternatif', $data);	
+				helper_log($this->session->userdata('nik'), 'Edit Alternatif '.$alternatif_nama);
 				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
 			}
 			redirect('admin/alternatif');
@@ -300,6 +341,8 @@ class Admin extends CI_Controller {
 		$this->am->Delete("alternatif",["alternatif_id"=>$id]);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		$this->session->set_flashdata('message1', '<div class="alert alert-success" role="alert">Rating Kecocokan yang memiliki alternatif tersebut Sukses Dihapus</div>');
+		helper_log($this->session->userdata('nik'), 'Delete Alternatif '.$id);
+		helper_log($this->session->userdata('nik'), 'Delete Rating Kecocokan dari Alternatif '.$id);
 		redirect('admin/alternatif');
 	}
 
@@ -361,6 +404,7 @@ class Admin extends CI_Controller {
 
 					];
 					$this->db->insert('rating_kecocokan', $data);
+					helper_log($this->session->userdata('nik'), 'Tambah Rating Kecocokan '.$this->input->post('alternatif_nama'));
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
 
 				}else{ // edit
@@ -371,6 +415,7 @@ class Admin extends CI_Controller {
 					$this->db->where('alternatif_id', $alternatif_id);
 					$this->db->where('kriteria_id', $kriteria_id);
 					$this->db->update('rating_kecocokan', $data);	
+					helper_log($this->session->userdata('nik'), 'Edit Rating Kecocokan '.$alternatif_id);
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
 				}
 			}
@@ -381,6 +426,7 @@ class Admin extends CI_Controller {
 	function delete_rating_kecocokan($id)
 	{
 		$this->am->Delete("rating_kecocokan",["alternatif_id"=>$id]);
+		helper_log($this->session->userdata('nik'), 'Delete Rating Kecocokan '.$id);
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('admin/rating_kecocokan');
 	}
