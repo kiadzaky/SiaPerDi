@@ -108,7 +108,7 @@
             } ?>
            
           </div>
-          <?php if ($this->session->userdata('nik')==0) {
+          <?php if ($this->session->userdata('jabatan_id')==0) {
           ?>
 
           <div class="row">
