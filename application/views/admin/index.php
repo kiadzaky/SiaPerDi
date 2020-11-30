@@ -112,6 +112,29 @@
           ?>
 
           <div class="row">
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-header"> Diagram Rata Rata Nilai Semua Atlet Per Kriteria </div>
+                <div class="card-body">
+                  <div>
+                    <canvas style="position: relative; " id="myChart1"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="card">
+                <div class="card-header"> Diagram Perbandingan Atlet </div>
+                <div class="card-body">
+                  <div>
+                    <canvas style="position: relative; " id="myChart2"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
             <div class="col-12">
                 <div class="card">
                   <div class="card-header">
@@ -160,5 +183,103 @@
       
     </div>
   </div> 
+
+  <?php
+  $kriteria_nama = "";
+  $nilai_rata2 = null;
+  $atlet_jkel = "";
+  $jml_jkel = null;
+    foreach ($chart['kriteria'] as $c) {
+      $kriteria= $c['kriteria_nama'];
+      $kriteria_nama .= "'$kriteria'". ", "; //nama kriteria
+      
+      foreach ($c['nilai'] as $n) {
+        $nilai = $n->rata2;
+        $nilai_rata2 .= "'$nilai'". ", "; // nilai rata2
+      }
+    }
+    foreach ($chart['atlet'] as $aj) {
+      $jkel = $aj->atlet_jkel;
+      $jml = $aj->jml_jkel;
+
+      $atlet_jkel .= "'$jkel'". ", "; //putra putri
+      $jml_jkel .= "'$jml'". ", "; //jumlah jkel
+    }
+   ?>
+  <script>
+    var ctx = document.getElementById("myChart1").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: [<?=$kriteria_nama?>],
+        datasets: [{
+          label: 'Rata Rata',
+          data: [<?=$nilai_rata2?>],
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero:true
+            }
+          }]
+        }
+      }
+    });
+  </script>
+
+  <script>
+    var ctx = document.getElementById("myChart2").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: [<?=$atlet_jkel?>],
+        datasets: [{
+          label: 'Jumlah',
+          data: [<?=$jml_jkel?>],
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        scales: {
+          
+        }
+      }
+    });
+  </script>
 </body>
 </html>

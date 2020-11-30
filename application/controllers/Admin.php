@@ -10,6 +10,25 @@ class Admin extends CI_Controller {
 		hakakses();
 	}
 
+	function getChart()
+	{
+		$kriteria = $this->am->getQuery("SELECT * FROM `kriteria`")->result();
+		$data = [];
+		$atlet_jkel = $this->am->getQuery("SELECT atlet_jkel, COUNT(atlet_jkel) as jml_jkel  FROM `atlet` GROUP BY atlet_jkel ORDER BY atlet_jkel ASC")->result();
+		for ($i=0; $i <count($kriteria) ; $i++) { 		
+			$nilai_rata2 = $this->am->getQuery("SELECT AVG(nilai_kriteria) AS rata2 FROM `nilai`  WHERE kriteria_id = ".$kriteria[$i]->kriteria_id." ORDER BY `kriteria_id` ASC")->result();
+			$data['kriteria'][$i]['kriteria_id'] = $kriteria[$i]->kriteria_id;
+			$data['kriteria'][$i]['kriteria_nama'] = $kriteria[$i]->kriteria_nama;
+			
+			$data['kriteria'][$i]['nilai'] = $nilai_rata2;
+
+			$data['atlet'] = $atlet_jkel;
+		}
+		
+		// print_r(json_encode($data));
+		return $data;
+	}
+
 	function index()
 	{
 		$data['title'] = "Dashoard";		
@@ -20,6 +39,8 @@ class Admin extends CI_Controller {
 			INNER JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result()) ;
 		$data['log'] = $this->am->getQuery("SELECT log_id, log_aktivitas, akun.akun_nama FROM `log` 
 			JOIN akun ON log.akun_nik = akun.akun_nik")->result();
+		$data['chart'] = $this->getChart();
+		$data['kriteria_nama'] = $this->am->getQuery("SELECT * FROM `kriteria` ORDER BY `kriteria`.`kriteria_id` ASC")->result();
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/index',$data);

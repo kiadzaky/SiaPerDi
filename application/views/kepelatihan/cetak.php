@@ -10,7 +10,7 @@
 			font-size: 25px;
 		}
 	</style>
-	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" integrity="sha512-hZf9Qhp3rlDJBvAKvmiG+goaaKRZA6LKUO35oK6EsM0/kjPK32Yw7URqrq3Q+Nvbbt8Usss+IekL7CRn83dYmw==" crossorigin="anonymous"></script>
 </head>
 <body>
 	<center>
@@ -54,7 +54,11 @@
 								<br>
 								<table border="1" cellpadding="4">
 									<thead  width="30%">
-										<?php foreach ($da['nilai'] as $n) {
+										<?php 
+										$kriteria = "";
+										foreach ($da['nilai'] as $n) {
+											$kriteria_nama = $n['kriteria_nama'];
+											$kriteria .= "'$kriteria_nama'". ", ";
 										?>
 										<th width="30%"><?=$n['kriteria_nama']?></th>
 										<?php
@@ -62,7 +66,11 @@
 									</thead>
 									<tbody>
 										<tr>
-											<?php foreach ($da['nilai'] as $n) {
+											<?php 
+											$nilai = "";
+											foreach ($da['nilai'] as $n) {
+												$nilai_atlet = $n['nilai_kriteria'];
+												$nilai .= "'$nilai_atlet'". ", ";
 											?>
 											<td width="30%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
 											<?php
@@ -87,6 +95,17 @@
 				</table>
 		</table>
 		<button style="size: 100" onclick="cetak()" id="cetak">CETAK</button>
+		<br>
+		&nbsp
+		<div class="col-sm-6">
+              <div class="card">
+                <div class="card-body">
+                  <div style="width: 700px;height: 700px">
+                    <canvas style="position: relative; " id="myChart1"></canvas>
+                  </div>
+                </div>
+              </div>
+        </div>
 	</center>
 <script type="text/javascript">
 	function cetak() {
@@ -99,5 +118,40 @@
 		
 	}
 </script>
+ <script>
+    var ctx = document.getElementById("myChart1").getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: [<?=$kriteria?>],
+        datasets: [{
+          label: 'Rata Rata',
+          data: [<?=$nilai?>],
+          backgroundColor: [
+          'rgba(255, 99, 132, 0.2)',
+          'rgba(54, 162, 235, 0.2)',
+          'rgba(255, 206, 86, 0.2)',
+          'rgba(75, 192, 192, 0.2)',
+          'rgba(153, 102, 255, 0.2)',
+          'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+          'rgba(255,99,132,1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 2,
+        }]
+      },
+      options: {
+        scales: {
+          
+        }
+      }
+    });
+  </script>
 </body>
 </html>
