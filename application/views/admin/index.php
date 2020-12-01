@@ -185,27 +185,29 @@
   </div> 
 
   <?php
-  $kriteria_nama = "";
-  $nilai_rata2 = null;
-  $atlet_jkel = "";
-  $jml_jkel = null;
-    foreach ($chart['kriteria'] as $c) {
-      $kriteria= $c['kriteria_nama'];
-      $kriteria_nama .= "'$kriteria'". ", "; //nama kriteria
-      
-      foreach ($c['nilai'] as $n) {
-        $nilai = $n->rata2;
-        $nilai_rata2 .= "'$nilai'". ", "; // nilai rata2
-      }
-    }
-    foreach ($chart['atlet'] as $aj) {
-      $jkel = $aj->atlet_jkel;
-      $jml = $aj->jml_jkel;
+    if ($this->session->userdata('jabatan_id')==0) {
+      $kriteria_nama = "";
+      $nilai_rata2 = null;
+      $atlet_jkel = "";
+      $jml_jkel = null;
+        foreach ($chart['kriteria'] as $c) {
+          $kriteria= $c['kriteria_nama'];
+          $kriteria_nama .= "'$kriteria'". ", "; //nama kriteria
+          
+          foreach ($c['nilai'] as $n) {
+            $nilai = $n->rata2;
+            $nilai_rata2 .= "'$nilai'". ", "; // nilai rata2
+          }
+        }
+        foreach ($chart['atlet'] as $aj) {
+          $jkel = $aj->atlet_jkel;
+          $jml = $aj->jml_jkel;
 
-      $atlet_jkel .= "'$jkel'". ", "; //putra putri
-      $jml_jkel .= "'$jml'". ", "; //jumlah jkel
+          $atlet_jkel .= "'$jkel'". ", "; //putra putri
+          $jml_jkel .= "'$jml'". ", "; //jumlah jkel
+        }
     }
-   ?>
+  ?>
   <script>
     var ctx = document.getElementById("myChart1").getContext('2d');
     var myChart = new Chart(ctx, {
