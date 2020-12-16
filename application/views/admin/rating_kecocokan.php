@@ -165,7 +165,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label"><?=$k['kriteria_nama']?></label>
                         <div class="col-sm-9">
-                          <select class="form-control" name="fuzzy_segitiga-<?php echo strtolower($k['kriteria_nama'])  ?>" >
+                          <select class="form-control" name="fuzzy_segitiga-<?php echo strtolower($k['kriteria_id'])  ?>" >
                           <?php foreach ($fuzzy_segitiga as $fs) :?>
                            
                              <option <?php if($fs->fuzzy_segitiga_id == $k['fuzzy_segitiga_id']){ echo "selected";}?> value="<?=$fs->fuzzy_segitiga_id ?>"><?=$fs->uraian_kecocokan ?></option>

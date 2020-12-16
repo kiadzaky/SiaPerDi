@@ -374,7 +374,7 @@ class Admin extends CI_Controller {
 		JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id ")->result();
 
 		for ($i=0; $i < count($alternatif) ; $i++) { 
-			$fuzzy_segitiga = $this->am->getQuery("SELECT fuzzy_segitiga.fuzzy_segitiga_id, fuzzy_segitiga.uraian_kecocokan, kriteria.kriteria_nama, alternatif.alternatif_nama  FROM `rating_kecocokan`
+			$fuzzy_segitiga = $this->am->getQuery("SELECT fuzzy_segitiga.fuzzy_segitiga_id, fuzzy_segitiga.uraian_kecocokan, kriteria.kriteria_id, kriteria.kriteria_nama, alternatif.alternatif_nama  FROM `rating_kecocokan`
 				JOIN kriteria ON rating_kecocokan.kriteria_id = kriteria.kriteria_id
 				JOIN alternatif ON rating_kecocokan.alternatif_id = alternatif.alternatif_id
 				JOIN fuzzy_segitiga ON rating_kecocokan.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
@@ -385,6 +385,7 @@ class Admin extends CI_Controller {
 			for ($j=0; $j < count($fuzzy_segitiga) ; $j++) { 
 				$data[$i]['fuzzy_segitiga'][$j]['fuzzy_segitiga_id'] = $fuzzy_segitiga[$j]->fuzzy_segitiga_id;
 				$data[$i]['fuzzy_segitiga'][$j]['uraian_kecocokan'] = $fuzzy_segitiga[$j]->uraian_kecocokan;
+				$data[$i]['fuzzy_segitiga'][$j]['kriteria_id'] = $fuzzy_segitiga[$j]->kriteria_id;
 				$data[$i]['fuzzy_segitiga'][$j]['kriteria_nama'] = $fuzzy_segitiga[$j]->kriteria_nama;
 			}
 		}
