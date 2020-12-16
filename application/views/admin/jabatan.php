@@ -15,7 +15,7 @@
                   <div class="card-header">
                     <div class="col-md-9"><h4>TABEL <?= strtoupper($title) ?></h4></div>
                     
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">TAMBAH <?= strtoupper($title) ?></button> 
+                    <!-- <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">TAMBAH <?= strtoupper($title) ?></button>  -->
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -23,9 +23,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Id Jabatan</th>
                                     <th>Nama Jabatan</th>
-                                    <th>Aksi</th>
+                                    <!-- <th>Aksi</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,12 +34,11 @@
                               ?>
                                 <tr>
                                     <td><?=$no++?></td>
-                                    <td><?=$j->jabatan_id?></td>
                                     <td><?=$j->jabatan_nama?></td>
-                                    <td>
+                                    <!-- <td>
                                       <a href="<?= base_url('admin/delete_jabatan/')?><?=$j->jabatan_id?>"><button class="btn btn-danger">Hapus</button></a>
 
-                                    </td>
+                                    </td> -->
                                 </tr>
                               <?php
                               

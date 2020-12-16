@@ -414,7 +414,7 @@ class Admin extends CI_Controller {
 			foreach ($kriteria as $k) {
 				$alternatif_id = $this->input->post('alternatif_id');
 				$kriteria_id = $k->kriteria_id;
-				$fuzzy_segitiga_id = $_POST['fuzzy_segitiga-'.strtolower($k->kriteria_nama)];
+				$fuzzy_segitiga_id = $_POST['fuzzy_segitiga-'.strtolower($k->kriteria_id)];
 				
 				if($alternatif_id == null){ // tambah
 

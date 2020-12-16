@@ -125,7 +125,7 @@
                           </div>
                         </div>
                       </div>
-                      <center><h6 class="center">Nilai</h6></center>
+                      <center><h6 class="center">Nilai Range 0-100</h6></center>
                       <div class="form-group row">
                         <?php
                         foreach ($kriteria as $k) {
@@ -163,7 +163,7 @@
           <div class="modal-dialog" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Modal Tambah <?=$title?></h5>
+                <h5 class="modal-title">Modal Edit <?=$title?></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -181,7 +181,7 @@
                           </div>
                         </div>
                       </div>
-                      <center><h6 class="center">Nilai</h6></center>
+                      <center><h6 class="center">Nilai Range 0-100</h6></center>
                       <div class="form-group row">
                         <?php
                         foreach ($na['kriteria'] as $na) {

@@ -77,7 +77,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">NIK</label>
                         <div class="col-sm-9">
-                          <input type="text" name="nik" id = "nik" class="form-control" required="" placeholder="NIK">
+                          <input type="number" name="nik" id = "nik" class="form-control" required="" placeholder="NIK">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>
