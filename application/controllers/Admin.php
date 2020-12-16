@@ -38,7 +38,7 @@ class Admin extends CI_Controller {
 		$data['jml_atlet_nilai'] = count($this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama) FROM `nilai`
 			INNER JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result()) ;
 		$data['log'] = $this->am->getQuery("SELECT log_id, log_aktivitas, akun.akun_nama FROM `log` 
-			JOIN akun ON log.akun_nik = akun.akun_nik")->result();
+			JOIN akun ON log.akun_nik = akun.akun_nik ORDER BY `log`.`log_id` DESC")->result();
 		$data['chart'] = $this->getChart();
 		$data['kriteria_nama'] = $this->am->getQuery("SELECT * FROM `kriteria` ORDER BY `kriteria`.`kriteria_id` ASC")->result();
 		$this->load->view('admin/part/head');
