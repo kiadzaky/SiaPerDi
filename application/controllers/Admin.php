@@ -411,6 +411,7 @@ class Admin extends CI_Controller {
 		
 		$this->load->view('admin/rating_kecocokan',$data);
 		$this->load->view('admin/part/footer');
+
 		if (isset($_POST['submit'])) {
 			foreach ($kriteria as $k) {
 				$alternatif_id = $this->input->post('alternatif_id');

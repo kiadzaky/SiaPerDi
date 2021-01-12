@@ -93,69 +93,87 @@
       
     </div>
   </div>
-
-  <div class="modal fade" tabindex="-1" role="dialog" id="tambahModal">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal Tambah <?=$title?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/nilai_atlet')?>">
-                    
-                    <div class="card-body">
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Atlet</label>
-                        <div class="col-sm-9">
-                          <select name="atlet_nama" id = "atlet_nama" class="form-control">
-                            <?php
-                            foreach ($atlet as $a) {
-                            ?>
-                            <option value="<?=$a->atlet_id?>"><?=$a->atlet_nama?> - Unit <?=$a->atlet_unit?></option>
-                            <?php
-                            }
-                            ?>
-                            
-                          </select>
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <center><h6 class="center">Nilai</h6></center>
-                      <div class="form-group row">
-                        <?php
-                        foreach ($kriteria as $k) {
-                        ?>
-                        <label>Nilai <?= $k->kriteria_nama?></label>
-                        <input type="" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" ></br>
-                        <?php
-                        }
-                        ?>
-                        <div class="col-sm-9">
-                          
-                          <div class="invalid-feedback">
-                           Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Nilai Atlet">
-                      
-                    </div>
-                  </form>
-              </div>
-              <!-- <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div> -->
-            </div>
-          </div>
+<?php echo(count($atlet)); if (count($atlet) <= 0 && $this->session->userdata('jabatan_id') == 0 )  {
+?>
+<div class="modal fade" tabindex="-1" role="dialog" id="tambahModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mohon Tambah Data Atlet</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h6><a href="<?=base_url('admin/atlet')?>">Menuju Link Ini</a></h6>
+      </div>
+    </div>
   </div>
+</div>
+<?php
+}else{
+?>
+<div class="modal fade" tabindex="-1" role="dialog" id="tambahModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal Tambah <?=$title?></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="needs-validation" novalidate="" method="post" action="<?=base_url('admin/nilai_atlet')?>">
+
+          <div class="card-body">
+            <div class="form-group row">
+              <label class="col-sm-3 col-form-label">Nama Atlet</label>
+              <div class="col-sm-9">
+                <select name="atlet_nama" id = "atlet_nama" class="form-control">
+                  <?php
+                  foreach ($atlet as $a) {
+                    ?>
+                    <option value="<?=$a->atlet_id?>"><?=$a->atlet_nama?> - Unit <?=$a->atlet_unit?></option>
+                    <?php
+                  }
+                  ?>
+
+                </select>
+                <div class="invalid-feedback">
+                  Tolong Diisi dengan Benar
+                </div>
+              </div>
+            </div>
+            <center><h6 class="center">Nilai</h6></center>
+            <div class="form-group row">
+              <?php
+              foreach ($kriteria as $k) {
+                ?>
+                <label>Nilai <?= $k->kriteria_nama?></label>
+                <input type="" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" ></br>
+                <?php
+              }
+              ?>
+              <div class="col-sm-9">
+
+                <div class="invalid-feedback">
+                 Tolong Diisi dengan Benar
+               </div>
+             </div>
+           </div>
+         </div>
+         <div class="card-footer text-right">
+          <input class="btn btn-primary" type="submit" name="submit" value="Tambah Nilai Atlet">
+
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+</div>
+<?php
+} ?>
+  
 <?php $no=0; foreach ($nilai_atlet as $na): $no++
                     // print_r($na['kriteria']);
                     ?>

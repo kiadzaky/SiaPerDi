@@ -77,7 +77,32 @@
       
     </div>
   </div>
-
+  <?php if (count($alternatif) <= 0) {
+  ?>
+  <style type="text/css">
+    .modal_info {
+      top: 25%;
+    }
+  </style>
+    <div class="modal fade modal_info" tabindex="-1" role="dialog" id="tambahModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">MOHON TAMBAH ALTERNATIF DI SUB MENU ALTERNATIF</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h6><a href="<?=base_url('admin/alternatif')?>">Menuju Menu Alternatif</a></h6>
+              </div>
+              
+            </div>
+          </div>
+  </div>
+  <?php
+  }else{
+  ?>
   <div class="modal fade" tabindex="-1" role="dialog" id="tambahModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -94,7 +119,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Nama Alternatif</label>
                         <div class="col-sm-9">
-                          <select name="alternatif_nama" class="form-control">
+                          <select name="alternatif_nama" class="form-control" required="">
                           <?php foreach ($alternatif as $a):?>
                           <option value="<?= $a->alternatif_id ?>"><?=$a->alternatif_nama?></option>
                           <?php endforeach; ?>
@@ -135,6 +160,9 @@
             </div>
           </div>
   </div>
+  <?php
+  } ?>
+  
 
   <?php foreach ($rating_kecocokan as $rk) {
   ?>

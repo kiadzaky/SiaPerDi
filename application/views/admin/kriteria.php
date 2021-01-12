@@ -116,7 +116,7 @@
                         <label class="col-sm-3 col-form-label">Nama Kriteria</label>
                         <div class="col-sm-9">
                           <input type="" name="kriteria_id" value="<?=$k->kriteria_id?>" hidden="">
-                          <input type="text" name="kriteria_nama" class="form-control" required="" value="<?=$k->kriteria_nama?>" placeholder="NIK">
+                          <input type="text" name="kriteria_nama" class="form-control" required="" value="<?=$k->kriteria_nama?>" placeholder="Nama Kriteria">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>

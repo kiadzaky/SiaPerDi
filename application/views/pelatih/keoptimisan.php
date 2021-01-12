@@ -87,7 +87,31 @@
       
     </div>
   </div>
-
+<?php if (count($atlet) > 0) {
+?>
+<style type="text/css">
+      .modal_info {
+        top: 25%;
+      }
+    </style>
+<div class="modal fade modal_info" tabindex="-1" role="dialog" id="tambahModal">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Mohon Tambah Data Perangkingan Atlet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <h6><a href="<?=base_url('pelatih/perangkingan')?>">Menuju Link Ini</a></h6>
+              </div>
+            </div>
+          </div>
+  </div>
+<?php
+}else{
+?>
   <div class="modal fade" tabindex="-1" role="dialog" id="tambahModal">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -128,7 +152,8 @@
             </div>
           </div>
   </div>
-
+<?php
+} ?>
 <!--   <?php foreach ($rating_kecocokan as $rk) {
   ?> -->
   <div class="modal fade" tabindex="-1" role="dialog" id="editModal<?=$rk['alternatif_id']?>">

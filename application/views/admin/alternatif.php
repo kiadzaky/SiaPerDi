@@ -75,7 +75,7 @@
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Nama Alternatif</label>
                         <div class="col-sm-9">
-                          <input type="text" name="alternatif_nama" class="form-control" required="" placeholder="Nama Kriteria">
+                          <input type="text" name="alternatif_nama" class="form-control" required="" placeholder="Nama Alternatif">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
                           </div>
@@ -83,7 +83,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Kriteria">
+                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Alternatif">
                       
                     </div>
                   </form>
