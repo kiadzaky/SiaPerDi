@@ -39,7 +39,7 @@
                                     <td><?=$k->kriteria_nama?></td>
                                     <td>
                                       <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$k->kriteria_id?>">Edit</button>
-                                      <a href="<?=base_url('admin/delete_kriteria')?>/<?=$k->kriteria_id?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                      <a href="<?=base_url('admin/delete_kriteria')?>/<?=$k->kriteria_id?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
 
                                     </td>
                                 </tr>

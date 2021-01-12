@@ -61,7 +61,7 @@
                                   ?>
                                       <td rowspan="<?=$jum?>">
                                         <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$na['atlet_id']?>" onclick="setId('<?= $na['atlet_id'] ?>', '<?= $na['atlet_nama']?>')">Edit</button>
-                                        <a href="<?=base_url('pelatih/delete_nilai')?>/<?= $na['atlet_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                        <a href="<?=base_url('pelatih/delete_nilai')?>/<?= $na['atlet_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
                                       </td>
                                       <?php  
                                       

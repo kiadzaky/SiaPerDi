@@ -43,7 +43,7 @@
                                     <td><?=strtoupper($a->atlet_kategori_umur)?></td>
                                     <td>
                                       <button class=" btn btn-success" data-toggle="modal" data-target="#editModal" onclick="setId('<?= $a->atlet_id ?>', '<?=$a->atlet_nama?>', '<?=$a->atlet_jkel?>', '<?=$a->atlet_unit ?>', '<?=$a->atlet_kategori_umur?>')">Edit</button>
-                                      <a href="<?=base_url('admin/delete_atlet')?>/<?= $a->atlet_id ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                      <a href="<?=base_url('admin/delete_atlet')?>/<?= $a->atlet_id ?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
                                     </td>
                                 </tr>
                               <?php

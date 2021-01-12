@@ -25,7 +25,7 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Username</th>
-                                    <th>Bidang</th>
+                                    <th>Jabatan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -41,7 +41,7 @@
                                     <td><?=$a->jabatan_nama?></td>
                                     <td>
                                       <button class=" btn btn-success" data-toggle="modal" data-target="#editModal" onclick="setId('<?= $a->akun_nik ?>', '<?=$a->akun_nama?>', '<?=$a->akun_username ?>', '<?=$a->jabatan_id ?>')">Edit</button>
-                                      <a href="<?=base_url('admin/delete_akun')?>/<?= $a->akun_nik ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                      <a href="<?=base_url('admin/delete_akun')?>/<?= $a->akun_nik ?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
                                     </td>
                                 </tr>
                               <?php

@@ -47,7 +47,7 @@
                                   ?>
                                       <td rowspan="<?=$jum?>">
                                         <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$rk['alternatif_id']?>">Edit</button>
-                                        <a href="<?=base_url('admin/delete_rating_kecocokan')?>/<?= $rk['alternatif_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Yakin Mau Hapus??')">Hapus</button></a>
+                                        <a href="<?=base_url('admin/delete_rating_kecocokan')?>/<?= $rk['alternatif_id'] ?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
                                       </td>
                                       <?php  
                                       
