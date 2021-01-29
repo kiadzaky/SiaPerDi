@@ -225,7 +225,7 @@
                         foreach ($na['kriteria'] as $na) {
                         ?>
                           <label>Nilai <?=$na['kriteria_nama']?></label>
-                          <input type="" class="form-control" name="kriteria-<?=$na['kriteria_id']?>" id = "kriteria-<?=$na['kriteria_id']?>" value ="<?=$na['nilai_kriteria']?>" placeholder="Nilai <?=$na['kriteria_nama']?>"  ></br>
+                          <input type="number" class="form-control" name="kriteria-<?=$na['kriteria_id']?>" id = "kriteria-<?=$na['kriteria_id']?>" value ="<?=$na['nilai_kriteria']?>" placeholder="Nilai <?=$na['kriteria_nama']?>"  ></br>
                         <?php
                         }
                         ?>

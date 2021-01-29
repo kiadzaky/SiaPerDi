@@ -53,7 +53,9 @@ class Admin extends CI_Controller {
 	{
 		$data['title'] = "Akun Pengguna";	
 
-		$data['akun'] = $this->am->getQuery('SELECT * FROM `akun` JOIN jabatan ON akun.jabatan_id = jabatan.jabatan_id')->result();
+		$data['akun'] = $this->am->getQuery("SELECT * FROM `akun` 
+			JOIN jabatan ON akun.jabatan_id = jabatan.jabatan_id 
+			WHERE akun_nik NOT IN ('".$this->session->userdata('nik')."')")->result();
 		$data['jabatan'] = $this->am->getData('jabatan')->result();
 
 
@@ -453,7 +455,6 @@ class Admin extends CI_Controller {
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('admin/rating_kecocokan');
 	}
-
 	
 }
 

@@ -13,13 +13,13 @@
   <script src="<?= base_url() ?>/assets/js/stisla.js"></script>
 
   <!-- JS Libraies -->
-  <script src="<?= base_url() ?>/node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
+  <!-- <script src="<?= base_url() ?>/node_modules/simpleweather/jquery.simpleWeather.min.js"></script>
   <script src="<?= base_url() ?>/node_modules/chart.js/dist/Chart.min.js"></script>
   <script src="<?= base_url() ?>/node_modules/jqvmap/dist/jquery.vmap.min.js"></script>
   <script src="<?= base_url() ?>/node_modules/jqvmap/dist/maps/jquery.vmap.world.js"></script>
   <script src="<?= base_url() ?>/node_modules/summernote/dist/summernote-bs4.js"></script>
   <script src="<?= base_url() ?>/node_modules/chocolat/dist/js/jquery.chocolat.min.js"></script>
-
+ -->
   <!-- Template JS File -->
   <script src="<?= base_url() ?>/assets/js/scripts.js"></script>
   <script src="<?= base_url() ?>/assets/js/custom.js"></script>
@@ -30,13 +30,13 @@
 
    <script>
   $(document).ready(function(){
-    $('#tabel-data').DataTable();
+    $('#tabel-data').DataTable({ dom: 'Bfrtip', buttons: [ 'copy', 'csv', 'excel', 'pdf', 'print' ] });
 });
   </script>
   <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
-  <script src="<?= base_url() ?>/assets/js/page/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url() ?>/assets/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
-<script src="<?= base_url() ?>/assets/js/page/jquery.dataTables.js"></script>
+<script src="<?= base_url() ?>/assets/js/jquery.dataTables.js"></script>
 <script src="<?=base_url('upup/')?>/upup.min.js"></script>
 <script>
     UpUp.start({
@@ -47,13 +47,10 @@
 </script>
 <script>
    if ('serviceWorker' in navigator) {
-      console.log("Will the service worker register?");
       navigator.serviceWorker.register('<?=base_url('upup/')?>upup.sw.min.js')
         .then(function(reg){
-          console.log("Yes, it did.");
          
        }).catch(function(err) {
-          console.log("No it didn't. This happened:", err);
           
       });
    }
