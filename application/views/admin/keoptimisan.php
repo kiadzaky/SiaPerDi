@@ -27,9 +27,9 @@
                                   <th>Kesimpulan</th>
                                   <th>Alternatif</th>
                                   <TH>Aksi</TH>
-                                  <th>Nilai A = 0</th>
-                                  <th>Nilai A = 0,5</th>
-                                  <th>Nilai A = 1</th>
+                                  <th>Nilai Alpha = 0</th>
+                                  <th>Nilai Alpha = 0,5</th>
+                                  <th>Nilai Alpha = 1</th>
                                 </tr>
                             </thead>
                             <tbody>

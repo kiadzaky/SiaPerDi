@@ -13,7 +13,10 @@
             <div class="col-12">
                 <div class="card">
                   <div class="card-header">
-                    <div class="col-md-9"><h4>TABEL <?= strtoupper($title) ?></h4></div>
+                    <div class="col-md-9">
+                      <h4>TABEL <?= strtoupper($title) ?></h4>
+                      <p style="color: red; font-weight: bold;">Perhitungan Menggunakan Integral</p>
+                    </div>
                     
                     <button class="btn btn-primary" data-toggle="modal" data-target="#tambahModal">TAMBAH <?= strtoupper($title) ?></button> 
                   </div>
@@ -36,9 +39,9 @@
                                   <th>No</th>
                                   <th>Nama Atlet</th>
                                   <th>Alternatif</th>
-                                  <th>Nilai A = 0</th>
-                                  <th>Nilai A = 0,5</th>
-                                  <th>Nilai A = 1</th>
+                                  <th>Nilai Alpha = 0</th>
+                                  <th>Nilai Alpha = 0,5</th>
+                                  <th>Nilai Alpha = 1</th>
                                 </tr>
                             </thead>
                             <tbody>
