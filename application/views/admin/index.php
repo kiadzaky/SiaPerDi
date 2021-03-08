@@ -114,16 +114,6 @@
           <div class="row">
             <div class="col-sm-6">
               <div class="card">
-                <div class="card-header"> Diagram Rata Rata Nilai Semua Atlet Per Kriteria </div>
-                <div class="card-body">
-                  <div>
-                    <canvas style="position: relative; " id="myChart1"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-6">
-              <div class="card">
                 <div class="card-header"> Diagram Perbandingan Atlet </div>
                 <div class="card-body">
                   <div>
@@ -190,15 +180,6 @@
       $nilai_rata2 = null;
       $atlet_jkel = "";
       $jml_jkel = null;
-        foreach ($chart['kriteria'] as $c) {
-          $kriteria= $c['kriteria_nama'];
-          $kriteria_nama .= "'$kriteria'". ", "; //nama kriteria
-          
-          foreach ($c['nilai'] as $n) {
-            $nilai = $n->rata2;
-            $nilai_rata2 .= "'$nilai'". ", "; // nilai rata2
-          }
-        }
         foreach ($chart['atlet'] as $aj) {
           $jkel = $aj->atlet_jkel;
           $jml = $aj->jml_jkel;
