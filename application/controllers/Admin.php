@@ -242,6 +242,19 @@ class Admin extends CI_Controller {
 		redirect('admin/jabatan');
 	}
 
+	function bobot()
+	{
+		$data['title'] = "Data Bobot";	
+		$data['bobot'] = $this->am->getData('fuzzy_segitiga')->result();
+		$this->load->view('admin/part/head');
+		$this->load->view('admin/part/navbar');
+		$this->load->view('admin/part/js');
+		$this->load->view('admin/part/sidebar',$data);
+		
+		$this->load->view('admin/bobot',$data);
+		$this->load->view('admin/part/footer');
+	}
+
 	function kriteria()
 	{
 		$data['title'] = "Data Kriteria";	

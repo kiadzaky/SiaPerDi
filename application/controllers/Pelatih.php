@@ -41,7 +41,7 @@ class Pelatih extends CI_Controller {
 		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result();
 		$data = [];
 		for ($i=0; $i < count($atlet) ; $i++) { 
-			$nilai = $this->am->getQuery("SELECT kriteria.kriteria_id, nilai.nilai_kriteria, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi FROM `nilai`
+			$nilai = $this->am->getQuery("SELECT kriteria.kriteria_id, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi FROM `nilai`
 				JOIN kriteria ON nilai.kriteria_id = kriteria.kriteria_id
 				JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
 				WHERE nilai.atlet_id = ".$atlet[$i]->atlet_id." ORDER BY kriteria.kriteria_id ASC")->result();
@@ -50,7 +50,6 @@ class Pelatih extends CI_Controller {
 				for ($j=0; $j < count($nilai); $j++) { 
 					$data[$i]['kriteria'][$j]['kriteria_id'] = $nilai[$j]->kriteria_id;
 					$data[$i]['kriteria'][$j]['kriteria_nama'] = $nilai[$j]->kriteria_nama;
-					$data[$i]['kriteria'][$j]['nilai_kriteria'] = $nilai[$j]->nilai_kriteria;
 					$data[$i]['kriteria'][$j]['uraian_fuzzyfikasi'] = $nilai[$j]->uraian_fuzzyfikasi;
 				}
 
@@ -67,7 +66,7 @@ class Pelatih extends CI_Controller {
 			JOIN atlet ON nilai.atlet_id = atlet.atlet_id WHERE atlet.atlet_nama LIKE '%$atlet_nama_cari%' ")->result();
 
 		for ($i=0; $i < count($atlet) ; $i++) { 
-			$kriteria = $this->am->getQuery("SELECT kriteria.kriteria_id, nilai.nilai_kriteria, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi FROM `nilai`
+			$kriteria = $this->am->getQuery("SELECT kriteria.kriteria_id, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi FROM `nilai`
 				JOIN atlet ON nilai.atlet_id = atlet.atlet_id
 				JOIN kriteria ON nilai.kriteria_id = kriteria.kriteria_id
 				JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
@@ -79,7 +78,6 @@ class Pelatih extends CI_Controller {
 			for ($j=0; $j < count($kriteria) ; $j++) { 
 				$data[$i]['kriteria'][$j]['kriteria_id'] = $kriteria[$j]->kriteria_id;
 				$data[$i]['kriteria'][$j]['kriteria_nama'] = $kriteria[$j]->kriteria_nama;
-				$data[$i]['kriteria'][$j]['nilai_kriteria'] = $kriteria[$j]->nilai_kriteria;
 				$data[$i]['kriteria'][$j]['uraian_fuzzyfikasi'] = $kriteria[$j]->uraian_fuzzyfikasi;
 			}
 		}
@@ -101,8 +99,8 @@ class Pelatih extends CI_Controller {
 			WHERE nilai_id is null")->result();
 		$kriteria_all = $this->am->getData('kriteria')->result();
 		$data['kriteria'] = $kriteria_all;
+		$data['bobot'] = $this->am->getData('fuzzy_segitiga')->result();
 		
-
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/part/js');
@@ -114,24 +112,13 @@ class Pelatih extends CI_Controller {
 		if (isset($_POST['submit'])) {
 			
 			foreach ($kriteria_all as $key) {
-				$nilai_kriteria = $_POST['kriteria-'.$key->kriteria_id];
 				$atlet_id = $_POST['atlet_id'];
-
-				if($nilai_kriteria <=100 && $nilai_kriteria >= 75){ //sangat baik sangat cocok
- 					$fuzzy_segitiga_id = 4;
-				}elseif ($nilai_kriteria < 75 && $nilai_kriteria >= 50 ) { //baik cocok
-					$fuzzy_segitiga_id = 3;
-				}elseif ($nilai_kriteria < 50 && $nilai_kriteria >=25) { // cukup baik ckup cocok
-					$fuzzy_segitiga_id = 2;
-				}elseif ($nilai_kriteria < 25) { // tidak baik tidak cocok
-					$fuzzy_segitiga_id = 1;
-				}
+				$fuzzy_segitiga_id = $_POST['fuzzy_segitiga_id_'.$key->kriteria_id];
 				if($atlet_id == null){ //TAMBAH DATA
 					$data = [
 					'akun_nik' => $this->session->userdata('nik'),
 					'atlet_id' => $this->input->post('atlet_nama'),
 					'kriteria_id' => $key->kriteria_id,
-					'nilai_kriteria' => $nilai_kriteria,
 					'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
 					];
 					$this->db->insert('nilai', $data);

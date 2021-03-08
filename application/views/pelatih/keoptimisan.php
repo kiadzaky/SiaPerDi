@@ -90,7 +90,7 @@
       
     </div>
   </div>
-<?php if (count($atlet) > 0) {
+<?php if (count($atlet) <= 0) {
 ?>
 <style type="text/css">
       .modal_info {
@@ -157,64 +157,5 @@
   </div>
 <?php
 } ?>
-<!--   <?php foreach ($rating_kecocokan as $rk) {
-  ?> -->
-  <div class="modal fade" tabindex="-1" role="dialog" id="editModal<?=$rk['alternatif_id']?>">
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Modal Edit <?=$title?></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('pelatih/rating_kecocokan')?>">
-                    
-                    <div class="card-body">
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Nama Alternatif</label>
-                        <div class="col-sm-9">
-                          <input type="" name="alternatif_id" value="<?=$rk['alternatif_id']?>" hidden>
-                          <input type="text" name="alternatif_nama" class="form-control" required="" value="<?=$rk['alternatif_nama']?>" placeholder="Alternatif">
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <?php foreach ($rk['fuzzy_segitiga'] as $k):?>
-                      <div class="form-group row">
-                        <label class="col-sm-3 col-form-label"><?=$k['kriteria_nama']?></label>
-                        <div class="col-sm-9">
-                          <select class="form-control" name="fuzzy_segitiga-<?php echo strtolower($k['kriteria_nama'])  ?>" >
-                          <?php foreach ($fuzzy_segitiga as $fs) :?>
-                           
-                             <option <?php if($fs->fuzzy_segitiga_id == $k['fuzzy_segitiga_id']){ echo "selected";}?> value="<?=$fs->fuzzy_segitiga_id ?>"><?=$fs->uraian_kecocokan ?></option>
-                           
-                          <?php endforeach; ?>
-                          </select>
-                          <div class="invalid-feedback">
-                            Tolong Diisi dengan Benar
-                          </div>
-                        </div>
-                      </div>
-                      <?php endforeach; ?>
-                    </div>
-                    <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Edit Kriteria">
-                      
-                    </div>
-                  </form>
-              </div>
-              <!-- <div class="modal-footer bg-whitesmoke br">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-              </div> -->
-            </div>
-          </div>
-  </div>
- <!--  <?php
-  } ?> -->
- 
 </body>
 </html>

@@ -46,6 +46,7 @@
               <li class="nav-item dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Halaman</span></a>
                 <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="<?=base_url()?>admin/bobot">Bobot</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/kriteria">Kriteria</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/alternatif">Alternatif</a></li>
                   <li><a class="nav-link" href="<?=base_url()?>admin/rating_kecocokan">Rating Kecocokan</a></li>

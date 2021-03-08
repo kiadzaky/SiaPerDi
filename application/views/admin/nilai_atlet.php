@@ -148,10 +148,17 @@
             <div class="form-group row">
               <?php
               foreach ($kriteria as $k) {
-                ?>
+              ?>
                 <label>Nilai <?= $k->kriteria_nama?></label>
-                <input type="" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" ></br>
+                <select class="form-control" name="fuzzy_segitiga_id">
+                  <option hidden="">Pilih Bobot</option>
+                </select>
+                <?php foreach ($bobot as $bo) {
+                ?>
+                  <option value="<?=$bo->fuzzy_segitiga_id?>"><?=$bo->uraian_fuzzyfikasi?></option>
                 <?php
+                } ?>  
+               <?php
               }
               ?>
               <div class="col-sm-9">

@@ -39,7 +39,6 @@
                                     <th>Nama Atlet</th>
                                     <th>Aksi</th>
                                     <th>Kriteria</th>
-                                    <th>Nilai</th>
                                     <th>Fuzzyfikasi</th>
                                     
                                 </tr>
@@ -68,7 +67,6 @@
                                       foreach ($na['kriteria'] as $nak) {
                                         echo "<tr>";                                     
                                         echo '<td> '.$nak['kriteria_nama'].' </td>';
-                                        echo '<td> '.$nak['nilai_kriteria'].' </td>';
                                         echo '<td> '.$nak['uraian_fuzzyfikasi'].' </td>';
                                         echo "</tr>";
 
@@ -159,13 +157,20 @@
                     </div>
                   </div>
                 </div>
-                <center><h6 class="center">Nilai Range 0-100</h6></center>
                 <div class="form-group row">
                   <?php
                   foreach ($kriteria as $k) {
                     ?>
                     <label>Nilai <?= $k->kriteria_nama?></label>
-                    <input type="number" min="0" max="100" class="form-control" name="kriteria-<?=$k->kriteria_id?>" value ="" placeholder="Nilai <?= $k->kriteria_nama?>" required ></br>
+                    <select class="form-control" name="fuzzy_segitiga_id_<?=$k->kriteria_id?>">
+                      <option hidden="">Pilih Bobot</option>
+
+                    <?php foreach ($bobot as $bo) {
+                      ?>
+                      <option value="<?=$bo->fuzzy_segitiga_id?>"><?=$bo->uraian_fuzzyfikasi?></option>
+                      <?php
+                    } ?>  
+                    </select>
                     <?php
                   }
                   ?>
@@ -221,16 +226,8 @@
                       </div>
                       <center><h6 class="center">Nilai Range 0-100</h6></center>
                       <div class="form-group row">
-                        <?php
-                        foreach ($na['kriteria'] as $na) {
-                        ?>
-                          <label>Nilai <?=$na['kriteria_nama']?></label>
-                          <input type="number" class="form-control" name="kriteria-<?=$na['kriteria_id']?>" id = "kriteria-<?=$na['kriteria_id']?>" value ="<?=$na['nilai_kriteria']?>" placeholder="Nilai <?=$na['kriteria_nama']?>"  ></br>
-                        <?php
-                        }
-                        ?>
+                        
                         <div class="col-sm-9">
-                          
                           <div class="invalid-feedback">
                            Tolong Diisi dengan Benar
                           </div>
