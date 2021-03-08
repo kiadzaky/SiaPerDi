@@ -247,6 +247,25 @@ class Admin extends CI_Controller {
 		
 		$this->load->view('admin/bobot',$data);
 		$this->load->view('admin/part/footer');
+
+		if($this->input->post('fuzzy_segitiga_id') <> null || $this->input->post('fuzzy_segitiga_id') <> ''){ // edit bobot
+			$uraian_fuzzyfikasi = $this->input->post('uraian_fuzzyfikasi');
+			$uraian_kecocokan = $this->input->post('uraian_kecocokan');
+			$n1 = $this->input->post('n1');
+			$n2 = $this->input->post('n2');
+			$n3 = $this->input->post('n3');
+
+			$data = [
+				'uraian_fuzzyfikasi' => $uraian_fuzzyfikasi,
+				'uraian_kecocokan' => $uraian_kecocokan,
+				'n1' => $n1,
+				'n2' => $n2,
+				'n3' => $n3,
+			];
+			$this->db->where('fuzzy_segitiga_id', $this->input->post('fuzzy_segitiga_id'));
+			$this->db->update('fuzzy_segitiga', $data);
+			redirect('admin/bobot','refresh');
+		}
 	}
 
 	function kriteria()

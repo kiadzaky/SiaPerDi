@@ -47,7 +47,7 @@
                                     <td><?=$bo->n3?></td>
                                     <td>
                                       <button class=" btn btn-success" data-toggle="modal" data-target="#editModal<?=$bo->fuzzy_segitiga_id?>">Edit</button>
-                                      <a href="<?=base_url('admin/delete_bobot')?>/<?=$bo->fuzzy_segitiga_id?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a>
+                                      <!-- <a href="<?=base_url('admin/delete_bobot')?>/<?=$bo->fuzzy_segitiga_id?>"><button class="btn btn-danger" onclick="return confirm('Apakah Anda Yakin Untuk Hapus Data?')">Hapus</button></a> -->
 
                                     </td>
                                 </tr>
@@ -131,7 +131,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Edit Bobot">
+                      <input class="btn btn-primary" type="submit" value="Edit Bobot">
                       
                     </div>
                   </form>
