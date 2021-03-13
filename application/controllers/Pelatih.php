@@ -307,7 +307,7 @@ class Pelatih extends CI_Controller {
 			$integral = $this->am->getQuery("SELECT * FROM `integral`
 				JOIN alternatif ON integral.alternatif_id = alternatif.alternatif_id
 				WHERE atlet_id = ".$atlet[$i]->atlet_id."
-				ORDER BY integral.alternatif_id ASC")->result();
+				ORDER BY integral.a_1 DESC")->result();
 			for ($j=0; $j < count($integral) ; $j++) { 
 					
 					$data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
