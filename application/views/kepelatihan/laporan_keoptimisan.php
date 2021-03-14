@@ -78,7 +78,7 @@
                                     <td><?=strtoupper($ko->atlet_jkel)?></td>
                                     <td ><?=$ko->kategori_pertandingan_atlet?></td>
                                     <td><?=strtoupper($ko->atlet_kategori_umur)?></td>
-                                    <td><a href="<?=base_url('kepelatihan/cetak/')?><?=$ko->atlet_id?>/<?=$ko->kategori_pertandingan_atlet?>"><i class="fas fa-print"></i></a></td>
+                                    <td><a target="blank" href="<?=base_url('kepelatihan/cetak/')?><?=$ko->atlet_id?>/<?=$ko->kategori_pertandingan_atlet?>"><i class="fas fa-print"></i></a></td>
                                 </tr>                     
                               <?php
                               

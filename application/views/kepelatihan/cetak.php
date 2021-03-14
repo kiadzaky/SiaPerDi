@@ -72,7 +72,7 @@
 												$nilai_atlet = $n['nilai_kriteria'];
 												$nilai .= "'$nilai_atlet'". ", ";
 											?>
-											<td width="30%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
+											<td width="40%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
 											<?php
 											} ?>
 										</tr>
@@ -97,15 +97,7 @@
 		<button style="size: 100" onclick="cetak()" id="cetak">CETAK</button>
 		<br>
 		&nbsp
-		<div class="col-sm-6">
-              <div class="card">
-                <div class="card-body">
-                  <div style="width: 700px;height: 700px">
-                    <canvas style="position: relative; " id="myChart1"></canvas>
-                  </div>
-                </div>
-              </div>
-        </div>
+		
 	</center>
 <script type="text/javascript">
 	function cetak() {
