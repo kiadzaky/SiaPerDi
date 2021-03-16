@@ -224,9 +224,20 @@
                           </div>
                         </div>
                       </div>
-                      <center><h6 class="center">Nilai Range 0-100</h6></center>
                       <div class="form-group row">
-                        
+                        <?php foreach ($na['kriteria'] as $kriteria) {
+                        ?>
+                        <label>Nilai <?= $kriteria['kriteria_nama']?></label>
+                          <select class="form-control" name="fuzzy_segitiga_id_<?=$kriteria['kriteria_id']?>">
+                            <option hidden="" value="<?=$kriteria['fuzzy_segitiga_id']?>"><?=$kriteria['uraian_fuzzyfikasi']?></option>
+                            <?php foreach ($bobot as $bo) {
+                            ?>
+                            <option value="<?=$bo->fuzzy_segitiga_id?>"><?=$bo->uraian_fuzzyfikasi?></option>
+                            <?php
+                            } ?>
+                          </select>
+                        <?php
+                        } ?>
                         <div class="col-sm-9">
                           <div class="invalid-feedback">
                            Tolong Diisi dengan Benar
