@@ -38,7 +38,7 @@ class Pelatih extends CI_Controller {
 
 	function getNilai()
 	{
-		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id")->result();
+		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
 		$data = [];
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$nilai = $this->am->getQuery("SELECT kriteria.kriteria_id, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi, fuzzy_segitiga.fuzzy_segitiga_id FROM `nilai`
@@ -64,7 +64,7 @@ class Pelatih extends CI_Controller {
 	{
 		$data =[];
 		$atlet = $this->am->getQuery("SELECT DISTINCT atlet.atlet_id, atlet.atlet_nama, atlet.atlet_unit FROM `nilai` 
-			JOIN atlet ON nilai.atlet_id = atlet.atlet_id WHERE atlet.atlet_nama LIKE '%$atlet_nama_cari%' ")->result();
+			JOIN atlet ON nilai.atlet_id = atlet.atlet_id WHERE atlet.atlet_nama LIKE '%$atlet_nama_cari%' ORDER BY atlet_nama ASC")->result();
 
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$kriteria = $this->am->getQuery("SELECT kriteria.kriteria_id, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi, fuzzy_segitiga.fuzzy_segitiga_id FROM `nilai`
@@ -79,7 +79,7 @@ class Pelatih extends CI_Controller {
 			for ($j=0; $j < count($kriteria) ; $j++) { 
 				$data[$i]['kriteria'][$j]['kriteria_id'] = $kriteria[$j]->kriteria_id;
 				$data[$i]['kriteria'][$j]['kriteria_nama'] = $kriteria[$j]->kriteria_nama;
-				$data[$i]['kriteria'][$j]['fuzzy_segitiga_id'] = $nilai[$j]->fuzzy_segitiga_id;
+				$data[$i]['kriteria'][$j]['fuzzy_segitiga_id'] = $kriteria[$j]->fuzzy_segitiga_id;
 				$data[$i]['kriteria'][$j]['uraian_fuzzyfikasi'] = $kriteria[$j]->uraian_fuzzyfikasi;
 			}
 		}
@@ -166,7 +166,7 @@ class Pelatih extends CI_Controller {
 		
 		$atlet = $this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama), atlet.atlet_id FROM `y_q_z`
 			JOIN alternatif ON y_q_z.alternatif_id = alternatif.alternatif_id
-			JOIN atlet ON y_q_z.atlet_id = atlet.atlet_id")->result();
+			JOIN atlet ON y_q_z.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
 			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
@@ -302,7 +302,7 @@ class Pelatih extends CI_Controller {
 		
         $kesimpulan = "";
 		$atlet = $this->am->getQuery("SELECT DISTINCT atlet.atlet_id, atlet.atlet_nama, atlet.atlet_unit FROM `integral`
-			JOIN atlet ON integral.atlet_id = atlet.atlet_id")->result();
+			JOIN atlet ON integral.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
 			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
@@ -331,7 +331,7 @@ class Pelatih extends CI_Controller {
 		
         $kesimpulan = "";
 		$atlet = $this->am->getQuery("SELECT DISTINCT atlet.atlet_id, atlet.atlet_nama, atlet.atlet_unit FROM `integral`
-			JOIN atlet ON integral.atlet_id = atlet.atlet_id WHERE atlet.atlet_nama LIKE '%$atlet_nama_cari%' ")->result();
+			JOIN atlet ON integral.atlet_id = atlet.atlet_id WHERE atlet.atlet_nama LIKE '%$atlet_nama_cari%' ORDER BY atlet_nama ASC")->result();
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
 			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
