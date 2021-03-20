@@ -90,8 +90,6 @@ class Kepelatihan extends CI_Controller {
 
 		}
 		
-		// print_r(json_encode($data[0]['prioritas'][0]['max_1']));
-		// print_r(json_encode($data[0]['prioritas'][1]['max_1']));
 		print_r(json_encode($data));
 	}
 

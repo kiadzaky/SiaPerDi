@@ -222,7 +222,6 @@ class Pelatih extends CI_Controller {
 	{
 		$kriteria = $this->am->getData('kriteria')->result();
 		$jml_kriteria = count($kriteria);
-		// echo $jml_kriteria;
 		$alternatif = $this->am->getData('alternatif')->result();
 		$jml_alternatif = count($alternatif);
 		$temp = 0;
@@ -422,7 +421,7 @@ class Pelatih extends CI_Controller {
 
 
 		            }elseif($integral[$j]->a_1 == $temp){
-		                    $kesimpulan = $integral[$j]->alternatif_nama." Dan ". $temp_alternatif;
+		                    $kesimpulan = $integral[$j]->alternatif_nama." Atau ". $temp_alternatif;
 		            }else{
 		                    $kesimpulan = $temp_alternatif;
 		            }	               

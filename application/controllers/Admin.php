@@ -296,11 +296,12 @@ class Admin extends CI_Controller {
 				helper_log($this->session->userdata('nik'), 'Tambah Kriteria '.$kriteria_nama);
 				$get_id_kriteria = $this->am->getQuery("SELECT kriteria_id FROM `kriteria` WHERE kriteria_nama = '$kriteria_nama'")->row_array(); //ambil id kriteria yang baru
 				$alternatif = $this->am->getQuery("SELECT alternatif_id FROM `alternatif`")->result();
+				$fuzzy_segitiga_id = $this->am->getQuery("SELECT fuzzy_segitiga_id FROM `fuzzy_segitiga`")->row_array();
 				foreach ($alternatif as $a) {
 					$data = [
 						'alternatif_id' => $a->alternatif_id,
 						'kriteria_id' => $get_id_kriteria['kriteria_id'],
-						'fuzzy_segitiga_id' => 1,
+						'fuzzy_segitiga_id' => $fuzzy_segitiga_id['fuzzy_segitiga_id'],
 					];
 					$this->db->insert('rating_kecocokan', $data );
 					helper_log($this->session->userdata('nik'), 'Tambah Rating Kecocokan '.$a->alternatif_id);
@@ -312,8 +313,7 @@ class Admin extends CI_Controller {
 						'akun_nik' => $this->session->userdata('nik'),
 						'kriteria_id' => $get_id_kriteria['kriteria_id'],
 						'atlet_id' => $atlet->atlet_id,
-						'nilai_kriteria' => '0',
-						'fuzzy_segitiga_id'=> '1',
+						'fuzzy_segitiga_id'=> $fuzzy_segitiga_id['fuzzy_segitiga_id'],
 
 					];
 					$this->db->insert('nilai', $data);

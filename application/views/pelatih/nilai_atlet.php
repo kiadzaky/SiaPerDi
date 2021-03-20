@@ -141,6 +141,7 @@
               <div class="card-body">
                 <div class="form-group row">
                   <label class="col-sm-3 col-form-label">Nama Atlet</label>
+                  <input type="" name="atlet_id" id = "atlet_id" value="" hidden>
                   <div class="col-sm-9">
                     <select name="atlet_nama" id = "atlet_nama" class="form-control" required="">
                       <?php
@@ -162,8 +163,8 @@
                   foreach ($kriteria as $k) {
                     ?>
                     <label>Nilai <?= $k->kriteria_nama?></label>
-                    <select class="form-control" name="fuzzy_segitiga_id_<?=$k->kriteria_id?>">
-                      <option hidden="">Pilih Bobot</option>
+                    <select class="form-control" name="fuzzy_segitiga_id_<?=$k->kriteria_id?>" required>
+                      <option selected="" hidden="" disabled="" value="">Pilih Bobot</option>
 
                     <?php foreach ($bobot as $bo) {
                       ?>
