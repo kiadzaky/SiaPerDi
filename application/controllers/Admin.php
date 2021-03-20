@@ -129,7 +129,7 @@ class Admin extends CI_Controller {
 		$data['kriteria'] = $this->am->getData('kriteria')->result();
 		
 		$data['jabatan'] = $this->am->getData('jabatan')->result();
-		$data['atlet'] = $this->am->getData('atlet')->result();
+		$data['atlet'] = $this->am->getData('atlet', 'atlet_nama ASC')->result();
 
 
 		$this->load->view('admin/part/head');
@@ -182,6 +182,9 @@ class Admin extends CI_Controller {
 	function delete_atlet($id)
 	{
 		$this->am->Delete("nilai",["atlet_id"=>$id]);
+		$this->am->Delete("y_q_z",["atlet_id"=>$id]);
+		$this->am->Delete("integral",["atlet_id"=>$id]);
+		$this->am->Delete("kategori_pertandingan_atlet",["atlet_id"=>$id]);
 		$this->am->Delete("atlet",["atlet_id"=>$id]);
 
 		helper_log($this->session->userdata('nik'), 'Delete Atlet '.$id);

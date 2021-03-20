@@ -98,7 +98,8 @@ class Pelatih extends CI_Controller {
 		} // cari atlet by nama
 		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT( atlet.atlet_nama), atlet.atlet_id, atlet.atlet_unit FROM `nilai` 
 			RIGHT JOIN atlet ON nilai.atlet_id = atlet.atlet_id
-			WHERE nilai_id is null")->result();
+			WHERE nilai_id is null
+			ORDER BY atlet_nama ASC")->result();
 		$kriteria_all = $this->am->getData('kriteria')->result();
 		$data['kriteria'] = $kriteria_all;
 		$data['bobot'] = $this->am->getData('fuzzy_segitiga')->result();
@@ -188,9 +189,11 @@ class Pelatih extends CI_Controller {
 	{
 		$data['title'] = "Data Rangking Atlet Terhadap Alternatif";	
 		$data['perangkingan'] = $this->getPerangkingan();
-		$data['atlet'] = $this->am->getQuery("SELECT * FROM `y_q_z`
-			RIGHT JOIN atlet ON y_q_z.atlet_id = atlet.atlet_id
-			WHERE y_q_z_id is null")->result();
+		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama), atlet.atlet_id, y_q_z.y_q_z_id FROM `nilai` 
+			JOIN atlet ON nilai.atlet_id = atlet.atlet_id
+			LEFT JOIN y_q_z ON atlet.atlet_id = y_q_z.atlet_id
+			WHERE y_q_z_id is null
+			ORDER BY atlet_nama ASC")->result();
 		$this->load->view('admin/part/head');
 		$this->load->view('admin/part/navbar');
 		$this->load->view('admin/part/js');

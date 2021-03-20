@@ -123,7 +123,7 @@
                       </div>
                     </div>
                     <div class="card-footer text-right">
-                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Akun">
+                      <input class="btn btn-primary" type="submit" name="submit" value="Tambah Atlet">
                       
                     </div>
                   </form>

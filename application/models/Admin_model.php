@@ -3,8 +3,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin_model extends CI_Model {
 
-	public function getData($table)
+	public function getData($table, $order_by = null)
 	{
+		if($order_by <> null){
+			$this->db->order_by($order_by);
+		}
 		return $this->db->get($table);
 
 	}
