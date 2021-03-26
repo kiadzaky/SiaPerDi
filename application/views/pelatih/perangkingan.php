@@ -57,6 +57,17 @@
                               } $no++;?>
                             </tbody>
                       </table>
+                      <div class="text-right">
+                      <?php
+                          $jml_data = $jml_atlet_ranking->jml;
+                          $jml_data = ceil($jml_data/3);
+                          for($i = 1 ; $i<=$jml_data; $i++){
+                          ?>
+                          <a href="<?=base_url('pelatih/perangkingan/').$i?>"><button class="btn btn-primary"><?=$i?></button></a>
+                          <?php
+                          }
+                        ?>
+                      </div>
                     </div>
                   </div>
                 </div>

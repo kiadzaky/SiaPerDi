@@ -36,10 +36,12 @@ class Pelatih extends CI_Controller {
 		$this->load->view('admin/part/footer');
 	}
 
-	function getNilai()
+	function getNilai($halaman=1)
 	{
-		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
+		$offset = ($halaman - 1) * 3;
+		$atlet = $this->am->getQuery("SELECT DISTINCT(nilai.atlet_id), atlet.atlet_nama FROM `nilai` JOIN atlet ON nilai.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC LIMIT $offset,3")->result();
 		$data = [];
+		// $data[0] = $jml_atlet;
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$nilai = $this->am->getQuery("SELECT kriteria.kriteria_id, kriteria.kriteria_nama, fuzzy_segitiga.uraian_fuzzyfikasi, fuzzy_segitiga.fuzzy_segitiga_id FROM `nilai`
 				JOIN kriteria ON nilai.kriteria_id = kriteria.kriteria_id
@@ -53,8 +55,6 @@ class Pelatih extends CI_Controller {
 					$data[$i]['kriteria'][$j]['fuzzy_segitiga_id'] = $nilai[$j]->fuzzy_segitiga_id;
 					$data[$i]['kriteria'][$j]['uraian_fuzzyfikasi'] = $nilai[$j]->uraian_fuzzyfikasi;
 				}
-
-
 		}
 		return $data;
 		// print_r(json_encode($data));
@@ -87,11 +87,12 @@ class Pelatih extends CI_Controller {
 		// echo json_encode($data); 
 	}
 
-	function nilai_atlet()
+	function nilai_atlet($halaman=1)
 	{
 		
 		$data['title'] = "Data Nilai Atlet";	
-		$data['nilai_atlet'] = $this->getNilai();
+		$data['nilai_atlet'] = $this->getNilai($halaman);
+		$data['jml_atlet_nilai'] = $this->am->getQuery("SELECT COUNT(DISTINCT(nilai.atlet_id)) as jml_atlet FROM `nilai`")->row();
 		if(isset($_GET['cari'])){
 			$atlet_nama_cari = $_GET['atlet_nama_cari'];
 			$data['nilai_atlet'] = $this->getNilaiByNama($atlet_nama_cari);
@@ -160,13 +161,14 @@ class Pelatih extends CI_Controller {
 		$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Dihapus</div>');
 		redirect('pelatih/nilai_atlet');
 	}
-	function getPerangkingan()
+	function getPerangkingan($halaman = 1)
 	{
+		$offset = ($halaman - 1) * 3;
 		$data =[];
 		
 		$atlet = $this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama), atlet.atlet_id FROM `y_q_z`
 			JOIN alternatif ON y_q_z.alternatif_id = alternatif.alternatif_id
-			JOIN atlet ON y_q_z.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
+			JOIN atlet ON y_q_z.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC LIMIT $offset,3")->result();
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
 			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
@@ -185,10 +187,11 @@ class Pelatih extends CI_Controller {
 		// print_r(json_encode($data));
 	}
 
-	function perangkingan()
+	function perangkingan($halaman=1)
 	{
 		$data['title'] = "Data Rangking Atlet Terhadap Alternatif";	
-		$data['perangkingan'] = $this->getPerangkingan();
+		$data['perangkingan'] = $this->getPerangkingan($halaman);
+		$data['jml_atlet_ranking'] = $this->am->getQuery("SELECT COUNT(DISTINCT(atlet_id)) as jml FROM `y_q_z`")->row();
 		$data['atlet'] = $this->am->getQuery("SELECT DISTINCT(atlet.atlet_nama), atlet.atlet_id, y_q_z.y_q_z_id FROM `nilai` 
 			JOIN atlet ON nilai.atlet_id = atlet.atlet_id
 			LEFT JOIN y_q_z ON atlet.atlet_id = y_q_z.atlet_id
@@ -296,13 +299,12 @@ class Pelatih extends CI_Controller {
 						}
 	}
 
-	function getKeoptimisan()
+	function getKeoptimisan($halaman = 1)
 	{
 		$data =[];
-		
-        $kesimpulan = "";
+		$offset = ($halaman - 1) * 3;
 		$atlet = $this->am->getQuery("SELECT DISTINCT atlet.atlet_id, atlet.atlet_nama, atlet.atlet_unit FROM `integral`
-			JOIN atlet ON integral.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC")->result();
+			JOIN atlet ON integral.atlet_id = atlet.atlet_id ORDER BY atlet_nama ASC LIMIT $offset,3")->result();
 		for ($i=0; $i < count($atlet) ; $i++) { 
 			$data[$i]['atlet_id'] = $atlet[$i]->atlet_id; 
 			$data[$i]['atlet_nama'] = $atlet[$i]->atlet_nama;
@@ -408,12 +410,7 @@ class Pelatih extends CI_Controller {
 			$temp = 0;
         	$temp_alternatif = " ";
 			for ($j=0; $j < count($integral) ; $j++) { 
-					
-					// $data[$i]['integral'][$j]['alternatif_id'] = $integral[$j]->alternatif_id;
-					// $data[$i]['integral'][$j]['alternatif_nama'] = $integral[$j]->alternatif_nama;
-				 //  	$data[$i]['integral'][$j]['a_0'] = $integral[$j]->a_0;
-				 //  	$data[$i]['integral'][$j]['a_0_5'] = $integral[$j]->a_0_5;
-				 //  	$data[$i]['integral'][$j]['a_1'] = $integral[$j]->a_1;
+				
 				  	if($integral[$j]->a_1 > $temp){
 		                 	$temp = $integral[$j]->a_1;
 		                 	$temp_alternatif = $integral[$j]->alternatif_nama;
@@ -432,10 +429,11 @@ class Pelatih extends CI_Controller {
 			];
 			$this->db->insert('kategori_pertandingan_atlet', $data);
 	}
-	function keoptimisan()
+	function keoptimisan($halaman = 1)
 	{
 		$data['title'] = "Data Derajat Keoptimisan Atlet";
-		$data['keoptimisan'] = $this->getKeoptimisan();
+		$data['keoptimisan'] = $this->getKeoptimisan($halaman);
+		$data['jml_atlet_optimis'] = $this->am->getQuery("SELECT COUNT(DISTINCT(atlet_id)) as jml FROM `integral`")->row();
 		if(isset($_GET['cari'])){
 			$atlet_nama_cari = $_GET['atlet_nama_cari'];
 			$data['keoptimisan'] = $this->getKeoptimisanByNama($atlet_nama_cari);
