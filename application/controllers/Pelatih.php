@@ -113,42 +113,61 @@ class Pelatih extends CI_Controller {
 		$this->load->view('pelatih/nilai_atlet',$data);
 		$this->load->view('admin/part/footer');
 
+	}
+
+	function tambah_nilai()
+	{
+
 		if (isset($_POST['submit'])) {
-			
+			$kriteria_all = $this->am->getData('kriteria')->result();
+			$data['kriteria'] = $kriteria_all;
+			$data['bobot'] = $this->am->getData('fuzzy_segitiga')->result();
 			foreach ($kriteria_all as $key) {
 				$atlet_id = $_POST['atlet_id'];
 				$fuzzy_segitiga_id = $_POST['fuzzy_segitiga_id_'.$key->kriteria_id];
 				if($atlet_id == null){ //TAMBAH DATA
 					$data = [
-					'akun_nik' => $this->session->userdata('nik'),
-					'atlet_id' => $this->input->post('atlet_nama'),
-					'kriteria_id' => $key->kriteria_id,
-					'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
+						'akun_nik' => $this->session->userdata('nik'),
+						'atlet_id' => $this->input->post('atlet_nama'),
+						'kriteria_id' => $key->kriteria_id,
+						'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
 					];
 					$this->db->insert('nilai', $data);
 					helper_log($this->session->userdata('nik'), 'Tambah Nilai Atlet '.$this->input->post('atlet_nama'));
 					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Ditambah</div>');
-				}else{ //EDIT DATA
-					$data = [
+				}
+			}
+			redirect('pelatih/nilai_atlet');
+		}
+	}
+
+	function edit_nilai()
+	{
+		if (isset($_POST['submit'])) {
+			$kriteria_all = $this->am->getData('kriteria')->result();
+			$data['kriteria'] = $kriteria_all;
+			$data['bobot'] = $this->am->getData('fuzzy_segitiga')->result();
+			$uri = $this->input->post('uri');
+			foreach ($kriteria_all as $key) {
+				$atlet_id = $_POST['atlet_id'];
+				$fuzzy_segitiga_id = $_POST['fuzzy_segitiga_id_'.$key->kriteria_id];
+				$data = [
 					'akun_nik' => $this->session->userdata('nik'),
 					'kriteria_id' => $key->kriteria_id,
 					'fuzzy_segitiga_id' => $fuzzy_segitiga_id,
-					];
-					$this->db->where('atlet_id', $atlet_id);
-					$this->db->where('kriteria_id', $key->kriteria_id);
-					$this->db->update('nilai', $data);	
-					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
-					// edit nilai keoptimisan dan nilai perangkingan
-					$this->hitungPerangkingan($atlet_id, $atlet_id);
-					$this->hitungKeoptimisan($atlet_id, $atlet_id);
-					helper_log($this->session->userdata('nik'), 'Edit Nilai Atlet '.$this->input->post('atlet_nama'));
-				}
-				
+				];
+				$this->db->where('atlet_id', $atlet_id);
+				$this->db->where('kriteria_id', $key->kriteria_id);
+				$this->db->update('nilai', $data);	
+				$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Sukses Edit Data</div>');
+						// edit nilai keoptimisan dan nilai perangkingan
+				$this->hitungPerangkingan($atlet_id, $atlet_id);
+				$this->hitungKeoptimisan($atlet_id, $atlet_id);
+				helper_log($this->session->userdata('nik'), 'Edit Nilai Atlet '.$this->input->post('atlet_nama'));
 			}
-			redirect('pelatih/nilai_atlet');
-		}//submit
-
-
+			$this->hitungKategoriPertandingan($atlet_id);
+			redirect('pelatih/nilai_atlet/'.$uri);
+		}
 	}
 
 	function delete_nilai($id)
@@ -427,7 +446,17 @@ class Pelatih extends CI_Controller {
 				'atlet_id'=>$atlet_id,
 				'kategori_pertandingan_atlet'=>$kesimpulan,
 			];
-			$this->db->insert('kategori_pertandingan_atlet', $data);
+
+			$cek_atlet = $this->am->getData("kategori_pertandingan_atlet", null, ['atlet_id' => $atlet_id])->row();
+			if($cek_atlet){
+				$this->db->where('atlet_id', $atlet_id);
+				$this->db->update('kategori_pertandingan_atlet', $data);
+				
+			}else{
+				$this->db->insert('kategori_pertandingan_atlet', $data);
+			}
+
+			
 	}
 	function keoptimisan($halaman = 1)
 	{

@@ -147,7 +147,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <form class="needs-validation" novalidate="" method="post" action="<?=base_url('pelatih/nilai_atlet')?>">
+            <form class="needs-validation" novalidate="" method="post" action="<?=base_url('pelatih/tambah_nilai')?>">
 
               <div class="card-body">
                 <div class="form-group row">
@@ -224,12 +224,13 @@
                 </button>
               </div>
               <div class="modal-body">
-                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('pelatih/nilai_atlet')?>">
+                <form class="needs-validation" novalidate="" method="post" action="<?=base_url('pelatih/edit_nilai')?>">
                     <div class="card-body">
                       <div class="form-group row">
                         <label class="col-sm-3 col-form-label">Nama Atlet</label>
                         <div class="col-sm-9">
                           <input type="" name="atlet_id" id = "atlet_id" value="<?=$na['atlet_id']?>" hidden>
+                          <input type="" name="uri" value="<?=$this->uri->segment(3)?>" hidden>
                           <input type="" name="atlet_nama" id="atlet_nama_edit" class="form form-control" readonly="" value="<?=$na['atlet_nama']?>">
                           <div class="invalid-feedback">
                             Tolong Diisi dengan Benar
