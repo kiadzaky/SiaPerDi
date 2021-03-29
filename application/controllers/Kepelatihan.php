@@ -50,7 +50,7 @@ class Kepelatihan extends CI_Controller {
 			$nilai = $this->am->getQuery("SELECT * FROM `nilai` 
 				JOIN kriteria ON nilai.kriteria_id = kriteria.kriteria_id
 				JOIN fuzzy_segitiga ON nilai.fuzzy_segitiga_id = fuzzy_segitiga.fuzzy_segitiga_id
-				WHERE atlet_id =  '$id'")->result();
+				WHERE atlet_id =  '$id' ORDER BY kriteria.kriteria_id ASC")->result();
 			for($j = 0 ; $j < count($nilai) ; $j++){
 				$data[$i]['nilai'][$j]['kriteria_nama'] = $nilai[$j]->kriteria_nama;
 				$data[$i]['nilai'][$j]['nilai_kriteria'] = $nilai[$j]->uraian_fuzzyfikasi;

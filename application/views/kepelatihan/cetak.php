@@ -55,10 +55,8 @@
 								<table border="1" cellpadding="4">
 									<thead  width="30%">
 										<?php 
-										$kriteria = "";
 										foreach ($da['nilai'] as $n) {
 											$kriteria_nama = $n['kriteria_nama'];
-											$kriteria .= "'$kriteria_nama'". ", ";
 										?>
 										<th width="30%"><?=$n['kriteria_nama']?></th>
 										<?php
@@ -67,10 +65,8 @@
 									<tbody>
 										<tr>
 											<?php 
-											$nilai = "";
 											foreach ($da['nilai'] as $n) {
 												$nilai_atlet = $n['nilai_kriteria'];
-												$nilai .= "'$nilai_atlet'". ", ";
 											?>
 											<td width="40%" style="text-align: center"><?= $n['nilai_kriteria'] ?></td>
 											<?php
